@@ -1,0 +1,23 @@
+llvenv) user@xp1n:~/p/lovelockcc$ nvm install 16.13.2
+Downloading and installing node v16.13.2...
+Downloading https://nodejs.org/dist/v16.13.2/node-v16.13.2-linux-x64.tar.xz...
+######################################################################################################################################################################################################################################## 100.0%
+Computing checksum with sha256sum
+Checksums matched!
+Now using node v16.13.2 (npm v8.1.2)
+(llvenv) user@xp1n:~/p/lovelockcc$ nvm use 16.13.2
+Now using node v16.13.2 (npm v8.1.2)
+(llvenv) user@xp1n:~/p/lovelockcc$ ganache-cli 
+Ganache CLI v6.12.2 (ganache-core: 2.13.2)
+
+Available Accounts
+==================
+(0) 0xa081b727e57F623f8A55ad8f8c4feD0A3161958E (100 ETH)
+
+
+nvm and ganache-cli version .... 
+
+brownie zum loggen bringen: 
+
+-o log_cli=true --log-cli-level=DEBUG
+
