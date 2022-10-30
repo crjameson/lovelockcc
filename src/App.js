@@ -3,7 +3,7 @@ import {getDefaultWallets, RainbowKitProvider} from "@rainbow-me/rainbowkit";
 import {chain, configureChains, createClient, WagmiConfig} from "wagmi";
 import {alchemyProvider} from "wagmi/providers/alchemy";
 import {publicProvider} from "wagmi/providers/public";
-import {YourComponent} from "./YourComponent";
+import {ConnectWallet} from "./ConnectWallet";
 import Container from 'react-bootstrap/Container';
 import {Row} from "react-bootstrap";
 import {Col} from "react-bootstrap";
@@ -11,10 +11,13 @@ import {Formular} from "./Forumlar";
 import {Benefits} from "./Benefits";
 import {MintNFT} from "./Mint";
 import {ShowNFT} from "./ShowNFT";
+import Logo from "./Assets/LoveLOck.png";
+import * as React from "react";
 const {chains, provider} = configureChains(
     [chain.polygonMumbai],
     [publicProvider()]
 );
+
 
 const {connectors} = getDefaultWallets({
     appName: "My RainbowKit App",
@@ -36,13 +39,10 @@ export default function App() {
                 <header className="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
                     <a href="/"
                        className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
-                        <svg className="bi me-2" width="40" height="32">
-
-                        </svg>
-                        <span className="fs-4">Lovelock.cc</span>
+                        <span className="fs-4"><img src={Logo} alt="logo" width="200" height="100"/></span>
                     </a>
                     <ul className="nav nav-pills">
-                        <li className="nav-item"><YourComponent/></li>
+                        <li className="nav-item"><ConnectWallet/></li>
                     </ul>
                 </header>
                 <div className="p-5 mb-4 bg-light rounded-3">
@@ -53,6 +53,7 @@ export default function App() {
                     </div>
                 </div>
                 <div className="p-5 mb-4 bg-light rounded-3">
+                    <h1 className="display-5 fw-bold">Love Lock Galery</h1>
                     <div className="container-fluid py-5">
                         <ShowNFT></ShowNFT>
                     </div>
