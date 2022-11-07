@@ -12,7 +12,7 @@ Ganache CLI v6.12.2 (ganache-core: 2.13.2)
 
 Available Accounts
 ==================
-(0) 0xa081b727e57F623f8A55ad8f8c4feD0A3161958E (100 ETH)
+(0) ...
 
 
 nvm and ganache-cli version .... 
@@ -20,4 +20,48 @@ nvm and ganache-cli version ....
 brownie zum loggen bringen: 
 
 -o log_cli=true --log-cli-level=DEBUG
+
+deployment auf mumbai testnet:
+
+brownie networks list -> zeigt polygon-test
+
+(llvenv) user@xp1n:~/p/lovelockcc$ brownie accounts list
+
+----------------------------------
+
+(llvenv) user@xp1n:~/p/lovelockcc$ brownie accounts generate deployment_account
+
+llvenv) user@xp1n:~/p/lovelockcc$ brownie accounts list
+Brownie v1.19.2 - Python development framework for Ethereum
+
+Found 1 account:
+ └─deployment_account: 0x31978Ce148d9D212c62cAC579f30d8767ccE234C
+
+ (llvenv) user@xp1n:~/p/lovelockcc$ brownie console --network polygon-test
+Brownie v1.19.2 - Python development framework for Ethereum
+
+LovelockccProject is the active project.
+Brownie environment is ready.
+>>> account = accounts.load('deployment_account')
+Enter password for "deployment_account": 
+>>> web3.fromWei(account.balance(), 'ether')
+
+-> infura muss das polygon addon aktiviert sein, kostet ggf. irgendwann geld, kreditkarte mit subscription muss hinterlegt sein
+
+deployment: 
+
+(llvenv) user@xp1n:~/p/lovelockcc$ brownie run scripts/deploy.py --network polygon-test
+Brownie v1.19.2 - Python development framework for Ethereum
+
+LovelockccProject is the active project.
+
+Running 'scripts/deploy.py::main'...
+Enter password for "deployment_account": 
+....
+
+--------
+
+running a specific test with log output:
+
+brownie test tests/test_ll.py::test_get_lock_fee -o log_cli=true --log-cli-level=DEBUG --network polygon-main-fork
 
