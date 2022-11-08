@@ -1,3 +1,9 @@
-.header {
+.spanlove {
   text-align: center;
+  color: #F9729A;
+}
+* {
+
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
 }
