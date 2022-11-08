@@ -97,5 +97,5 @@ def create_locks(lovelock_contract, example_lock, count, lock_fee=0):
             example_lock,
             "some nice nft description",
             {"from": get_account(i),
-            "value": lock_fee}
+            "value": lock_fee + 1000}
         )

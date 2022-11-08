@@ -21,7 +21,8 @@ contract LoveLock is ERC721URIStorage, VRFConsumerBase,  Ownable {
     uint256 public tokenCounter;
     // price for one lovelock - make love free :D, maybe we can use some chainlink pricing feature here 
     // 10 USD for a lock 5 for raffle, 1 for fees, and 4 for dev
-    uint256 private constant lockPriceUSD = 1 * (10**18);
+    // for tests one lock costs 10 cent so around 0.1 matic
+    uint256 private constant lockPriceUSD = 0.1 * (10**18);
     // percentage amount of the lockPrice paid to dev for Link and Dev costs
     uint256 private constant devFee = 40;
 
@@ -70,6 +71,8 @@ contract LoveLock is ERC721URIStorage, VRFConsumerBase,  Ownable {
         raffle_state = RAFFLE_STATE.OPEN;
         chainlinkFee = _chainlinkFee;
         keyhash = _keyhash;
+        //first lock has id 1 -> we skip zero
+         _tokenIds.increment();
     }
 
     /*
@@ -88,14 +91,11 @@ contract LoveLock is ERC721URIStorage, VRFConsumerBase,  Ownable {
         require(XSSFilter.validateString(svgparams.bg1), "invalid input");
         require(XSSFilter.validateString(svgparams.bg2), "invalid input");
         require(XSSFilter.validateString(svgparams.bg3), "invalid input");
-        require(XSSFilter.validateString(svgparams.lc1), "invalid input");
-        require(XSSFilter.validateString(svgparams.lc2), "invalid input");
-        require(XSSFilter.validateString(svgparams.lc3), "invalid input");
+        require(XSSFilter.validateString(svgparams.lockColor), "invalid input");
         require(XSSFilter.validateString(svgparams.text), "invalid input");
-        require(XSSFilter.validateString(svgparams.tc1), "invalid input");
-        require(XSSFilter.validateString(svgparams.tc2), "invalid input");
+        require(XSSFilter.validateString(svgparams.textColor), "invalid input");
         require(XSSFilter.validateString(svgparams.date), "invalid input");
-        require(XSSFilter.validateString(svgparams.dc1), "invalid input");
+        require(XSSFilter.validateString(svgparams.dateColor), "invalid input");
         require(XSSFilter.validateString(description), "invalid input");
 
         uint256 newTokenId = _tokenIds.current();
@@ -132,12 +132,15 @@ contract LoveLock is ERC721URIStorage, VRFConsumerBase,  Ownable {
 
     // enumerable interface is not neccesary and more expensive in fees, so better do it myself
     function totalSupply () public view returns (uint256) {
-        return _tokenIds.current();
+        // because our first token is 1, we need -1
+        return _tokenIds.current()-1;
     }
 
     /// @dev return the id of the owned lock
     function getMyLock() public view returns (uint256) {
-        return _lockOwnerByAddress[msg.sender];
+        uint256 lockId = _lockOwnerByAddress[msg.sender];
+        require(lockId > 0, "no lock avail");
+        return lockId;
     }
 
     /// @dev returns the USD price in Matic
@@ -175,7 +178,8 @@ contract LoveLock is ERC721URIStorage, VRFConsumerBase,  Ownable {
 
         // a random token id wins all the raffle and then has time till the next raffle to claim it
         // that way we dont lose money to dead wallets
-        uint256 winningToken = _randomness % _tokenIds.current();
+        //TODO: check if current() -1 is better, because we are starting now with tokenId 1
+        uint256 winningToken = _randomness % (_tokenIds.current()-1);
         recentWinner = payable(ownerOf(winningToken));
         // he can claim all the currently available matic token in this contract 
         recentPriceMoney = address(this).balance;

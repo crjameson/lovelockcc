@@ -65,3 +65,21 @@ running a specific test with log output:
 
 brownie test tests/test_ll.py::test_get_lock_fee -o log_cli=true --log-cli-level=DEBUG --network polygon-main-fork
 
+
+----------
+
+(llvenv) user@xp1n:~/p/lovelockcc$ brownie console --network polygon-test
+Brownie v1.19.2 - Python development framework for Ethereum
+
+LovelockccProject is the active project.
+Brownie environment is ready.
+>>> Contract("0xD32b8896517537467f0e3AEDf093D27554afb60b")
+<LoveLock Contract '0xD32b8896517537467f0e3AEDf093D27554afb60b'>
+>>> llc = Contract("0xD32b8896517537467f0e3AEDf093D27554afb60b")
+>>> llc.getLockFee()
+78446338264564292
+>>> llc.totalSupply()
+0
+
+--_> mega gut, brownie speichert die deployten contracts praktisch in einer db zwischen, 
+also kann die da jederzeit aufrufen

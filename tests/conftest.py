@@ -12,14 +12,13 @@ def lovelock_contract():
 
 @pytest.fixture()
 def example_lock():
-    return ["636363",\
-            "CFCFCF",\
-            "ABABAB",\
-            "FF0000",\
-            "00FF00",\
-            "0000FF",\
+    return ["fff",\
+            "d1d1d1",\
+            "b3b3b3",\
+            0,\
+            0,\
+            "9A9A9A",\
             "hello world",\
-            "FF0000",\
-            "FFFFFF",\
+            "111111",\
             "25.05.1928",\
-            "000000"]
+            "111111"]

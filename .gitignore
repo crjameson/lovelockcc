@@ -2,6 +2,7 @@
 #python3 venv
 llvenv
 docs/test.txt
+Frontend/node_modules/
 
 
 # Byte-compiled / optimized / DLL files
