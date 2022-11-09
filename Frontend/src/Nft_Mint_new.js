@@ -27,15 +27,17 @@ const customStyles = {
 };
 export function NftMintNew() {
     const [NameText, setNameText] = useState("your custom Text");
+    const [NftDescription, setNftDescription] = useState("your custom description");
     const [dateVal, setDateval] = useState("01.01.2022");
     const [bg1, setBg1] = useState("#257e38");
     const [bg2, setBg2] = useState("#d1d1d1");
     const [bg3, setBg3] = useState("#b3b3b3");
     const [lockcolor, setLockcolor] = useState("#A9A9A");
-    const [Locktype, setLocktype] = useState(1);
+    const [Locktype, setLocktype] = useState(0);
     const [Keyholetype, setKeyholetype] = useState(0);
-    const [Render_component, setRender_component] = useState("hearth_normal");
+    const [Render_component, setRender_component] = useState("square_normal");
     const [text_color, setTextcolor] = useState("#fff");
+    const [date_color, setDateColor] = useState("#fff");
     const [lockprice, setLockprice] = useState("");
 
 
@@ -87,7 +89,8 @@ export function NftMintNew() {
         args: [],
         onSuccess(data) {
             //let tmp_json  = JSON.parse(atob(data.slice(29)));
-            setLockprice(BigNumber(JSON.parse(data)));
+            console.log(JSON.parse(data));
+            setLockprice(BigNumber(JSON.parse(data)+5000) );
 
         },
     })
@@ -95,7 +98,7 @@ export function NftMintNew() {
     const { data, write } = useContractWrite(
         {
             mode: 'recklesslyUnprepared',
-            address: '0xD32b8896517537467f0e3AEDf093D27554afb60b',
+            address: config_file.contract_address,
             abi: [
                 {
                     name: 'createLoveLock',
@@ -120,18 +123,18 @@ export function NftMintNew() {
                                     "type": "string"
                                 },
                                 {
-                                    "internalType": "string",
-                                    "name": "lc1",
-                                    "type": "string"
+                                    "internalType": "uint256",
+                                    "name": "lockShape",
+                                    "type": "uint256"
+                                },
+                                {
+                                    "internalType": "uint256",
+                                    "name": "keyHoleShape",
+                                    "type": "uint256"
                                 },
                                 {
                                     "internalType": "string",
-                                    "name": "lc2",
-                                    "type": "string"
-                                },
-                                {
-                                    "internalType": "string",
-                                    "name": "lc3",
+                                    "name": "lockColor",
                                     "type": "string"
                                 },
                                 {
@@ -141,12 +144,7 @@ export function NftMintNew() {
                                 },
                                 {
                                     "internalType": "string",
-                                    "name": "tc1",
-                                    "type": "string"
-                                },
-                                {
-                                    "internalType": "string",
-                                    "name": "tc2",
+                                    "name": "textColor",
                                     "type": "string"
                                 },
                                 {
@@ -156,7 +154,7 @@ export function NftMintNew() {
                                 },
                                 {
                                     "internalType": "string",
-                                    "name": "dc1",
+                                    "name": "dateColor",
                                     "type": "string"
                                 }
                             ],
@@ -182,9 +180,26 @@ export function NftMintNew() {
             functionName: 'createLoveLock',
             overrides: {
                 from: address,
-                value: lockprice.toString(),
+                value: (lockprice).toString(),
+
+
             },
-            args: [["636363", "CFCFCF", "ABABAB", "FF0000", "00FF00", "0000FF", NameText, "FF0000", "FFFFFF",dateVal.toString(),"000000"], NameText],
+
+
+            args: [[
+                bg1.substring(1),
+                bg2.substring(1),
+                bg3.substring(1),
+                Locktype.toString(),
+                Keyholetype.toString(),
+                lockcolor.substring(1),
+                NameText,
+                text_color.substring(1),
+                dateVal.toString(),
+                date_color.substring(1)],
+                NftDescription],
+
+            //args: [[bg1.substring(1), bg2.substring(1), bg3.substring(1), Locktype.toString(), Keyholetype.toString(), lockcolor.substring(1), NameText, text_color.substring(1), ,dateVal.toString(), date_color.substring(1)], NftDescription],
             onSuccess(data) {
                 console.log('Success', data)},
             onSettled(data, error) {
@@ -193,6 +208,23 @@ export function NftMintNew() {
         })
     const { isLoading, isSuccess } = useWaitForTransaction({hash: data?.hash,});
 
+
+    useEffect(() => {
+
+        console.log(bg1.substring(1));
+        console.log(bg2.substring(1));
+        console.log(bg3.substring(1));
+        console.log(Locktype.toString());
+        console.log(Keyholetype.toString());
+        console.log(lockcolor.substring(1));
+        console.log(NameText.substring(1));
+        console.log(text_color.substring(1));
+        console.log(dateVal.substring(1));
+        console.log(date_color.substring(1));
+        console.log(NftDescription.substring(1));
+
+
+    }, []);
     return (
         <div className="container flex-column">
 
@@ -200,7 +232,7 @@ export function NftMintNew() {
                 <div className="col"></div>
                 <div className="col-9"><div className="card">
 
-                    <Component name={NameText} date={dateVal} bg1={bg1} bg2={bg2} bg3={bg3} lock_color={lockcolor} text_color={text_color}/>
+                    <Component name={NameText} date={dateVal} bg1={bg1} bg2={bg2} bg3={bg3} lock_color={lockcolor} text_color={text_color} date_color={date_color}/>
 
                 </div></div>
                 <div className="col"></div>
@@ -208,15 +240,15 @@ export function NftMintNew() {
 
             <div className="row">
                 <div className="col"><h3>Background 1</h3><SketchPicker
-                    onChangeComplete={(e) => { setBg1(e.hex); }}/></div>
+                    onChangeComplete={(e) => { setBg1(e.hex.toString()); }}/></div>
                 <div className="col"><h3>Background 2</h3><SketchPicker
-                    onChangeComplete={(e) => { setBg2(e.hex); }}/></div>
+                    onChangeComplete={(e) => { setBg2(e.hex.toString()); }}/></div>
                 <div className="col"><h3>Background 3</h3><SketchPicker
-                    onChangeComplete={(e) => { setBg3(e.hex); }}/></div>
+                    onChangeComplete={(e) => { setBg3(e.hex.toString()); }}/></div>
             </div>
             <div className="row">
                 <div className="col"><h3>Lock Color</h3><SketchPicker
-                    onChangeComplete={(e) => { setLockcolor(e.hex); }}/></div>
+                    onChangeComplete={(e) => { setLockcolor(e.hex.toString()); }}/></div>
                 <div className="col"></div>
                 <div className="col"></div>
             </div>
@@ -232,17 +264,24 @@ export function NftMintNew() {
                 <option value="1">Hearth Keyhole</option>
             </select>
             <input type="text" className="form-control" id="inputcustomtext"
-                   placeholder="Your Text"  maxLength="9" onChange={(e) => { setNameText(e.target.value); }}/>
+                   placeholder="Your Text"  maxLength="28" onChange={(e) => { setNameText(e.target.value); }}/>
             <input type="date" className="form-control" id="inputcustomdate"
                    placeholder="Date" onChange={(e) => { setDateval(e.target.value); }}/>
 
             <div className="row">
                 <div className="col"><h3>Text Color</h3><SketchPicker
-                    onChangeComplete={(e) => { setTextcolor(e.hex); }}/></div>
-                <div className="col"></div>
-                <div className="col"></div>
+                    onChangeComplete={(e) => { setTextcolor(e.hex.toString()); }}/></div>
+                <div className="col"><h3>Date Color</h3><SketchPicker
+                    onChangeComplete={(e) => { setDateColor(e.hex.toString()); }}/></div>
+                <div className="col"><h3>NFT Description</h3>
+                    <input type="text" className="form-control" id="inputcustomtext"
+                           placeholder="Your Text"  maxLength="1024" onChange={(e) => { setNftDescription(e.target.value); }}/>
+                </div>
             </div>
-            <button className="btn btn-primary btn-lg">Mint your NFT now</button>
+
+
+
+            <button className="btn btn-primary btn-lg" onClick={() => write?.()}>Mint your NFT now</button>
 
 
         </div>

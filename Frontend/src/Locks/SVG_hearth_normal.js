@@ -264,7 +264,7 @@ const SVGHearthNormal = (props) => (
             style={{
                 fontWeight: 900,
                 fontFamily: "monospace",
-                fill: "#1d1d1b",
+                fill: props.text_color,
                 fontSize: 24,
             }}
         >
@@ -278,7 +278,7 @@ const SVGHearthNormal = (props) => (
             style={{
                 fontWeight: 700,
                 fontFamily: "monospace",
-                fill: "#000",
+                fill: props.date_color,
                 fontSize: 12,
                 stroke: "none",
             }}

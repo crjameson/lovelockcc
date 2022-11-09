@@ -15,10 +15,13 @@ import Logo from "./Assets/Logo.svg";
 import * as React from "react";
 import "./App.css";
 import {NftMintNew} from "./Nft_Mint_new";
+import { Outlet, Route, Routes } from "react-router-dom";
+
 const {chains, provider} = configureChains(
     [chain.polygonMumbai],
     [publicProvider()]
 );
+
 
 
 const {connectors} = getDefaultWallets({
@@ -72,5 +75,18 @@ export default function App() {
             </Container>
             </RainbowKitProvider>
         </WagmiConfig>
+    );
+}
+function LayoutsWithNavbar() {
+    return (
+        <>
+            {/* Your navbar component */}
+
+
+            {/* This Outlet is the place in which react-router will render your components that you need with the navbar */}
+            <Outlet />
+
+            {/* You can add a footer to get fancy in here :) */}
+        </>
     );
 }

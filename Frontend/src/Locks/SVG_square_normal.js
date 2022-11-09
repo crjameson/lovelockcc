@@ -192,7 +192,7 @@ const SVGsquarenormal = (props) => (
             style={{
                 fontWeight: 700,
                 fontFamily: "monospace",
-                fill: props.text_color,
+                fill: props.date_color,
                 fontSize: 12,
                 stroke: "none",
             }}

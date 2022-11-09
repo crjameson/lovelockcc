@@ -252,18 +252,18 @@
 						"type": "string"
 					},
 					{
-						"internalType": "string",
-						"name": "lc1",
-						"type": "string"
+						"internalType": "uint256",
+						"name": "lockShape",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "keyHoleShape",
+						"type": "uint256"
 					},
 					{
 						"internalType": "string",
-						"name": "lc2",
-						"type": "string"
-					},
-					{
-						"internalType": "string",
-						"name": "lc3",
+						"name": "lockColor",
 						"type": "string"
 					},
 					{
@@ -273,12 +273,7 @@
 					},
 					{
 						"internalType": "string",
-						"name": "tc1",
-						"type": "string"
-					},
-					{
-						"internalType": "string",
-						"name": "tc2",
+						"name": "textColor",
 						"type": "string"
 					},
 					{
@@ -288,7 +283,7 @@
 					},
 					{
 						"internalType": "string",
-						"name": "dc1",
+						"name": "dateColor",
 						"type": "string"
 					}
 				],

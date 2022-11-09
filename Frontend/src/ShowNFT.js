@@ -11,6 +11,7 @@ import BigNumber from "bignumber.js";
 import additional from "./css/additional.css";
 import arrow from "./Assets/left-arrow-svgrepo-com.svg";
 import { useAccount, useConnect, useDisconnect } from 'wagmi'
+import config_file from "./Config/Config.json";
 
 export function ShowNFT() {
     const [locks, setLocks] = useState([]);
@@ -22,7 +23,8 @@ export function ShowNFT() {
 
 
     const { datareadfirst, isErrorreadfirst, isLoadingreadfirst } = useContractRead({
-        address: '0xD32b8896517537467f0e3AEDf093D27554afb60b',
+        address: config_file.contract_address,
+
         abi: [
             {
                 name: 'getMyLock',
@@ -46,12 +48,18 @@ export function ShowNFT() {
         onSuccess(data) {
 
             console.log("getMyLock Data: ", data);
-            //setlockid(JSON.parse(data));
-            //setelementLoaded(true);
+            setlockid(JSON.parse(data));
+            setelementLoaded(true);
+        },
+        onError(error) {
+            console.log('Error', error)
+            setelementLoaded(true);
+
+            setlockid(0);
         },
     })
     const { dataread, isErrorread, isLoadingread } = useContractRead({
-        address: '0xD32b8896517537467f0e3AEDf093D27554afb60b',
+        address: config_file.contract_address,
         abi: [
             {
                 name: 'tokenURI',
@@ -77,9 +85,9 @@ export function ShowNFT() {
         args: [lockid],
         onSuccess(data) {
             let tmp_json  = JSON.parse(atob(data.slice(29)));
-            console.log("lockid: ", lockid);
             if (lockid > 0)
             {
+                console.log(atob(tmp_json["image"].slice(26)));
                 setNFTJSON(atob(tmp_json["image"].slice(26)));
             }
             //console.log(atob(tmp_json["image"].slice(26)));
@@ -90,7 +98,7 @@ export function ShowNFT() {
         },
     })
     const { datareadcount, isErrorreadcout, isLoadingreadc } = useContractRead({
-        address: '0xD32b8896517537467f0e3AEDf093D27554afb60b',
+        address: config_file.contract_address,
         abi: [
             {
                 name: 'tokenCounter',
@@ -110,13 +118,13 @@ export function ShowNFT() {
         args: [],
         onSuccess(data) {
 
-            console.log("Token counter: ", JSON.parse(data));
+//            console.log("Token counter: ", JSON.parse(data));
+            console.log("Token counter: ", data);
             //console.log(atob(tmp_json["image"].slice(26)));
             //
             //document.getElementById("wrapper").innerHTML = nftJson
         },
     })
-
 
 
 
