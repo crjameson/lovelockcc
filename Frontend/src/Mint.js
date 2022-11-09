@@ -55,6 +55,7 @@ export function MintNFT() {
 
         },
     })
+
     const { data, write } = useContractWrite(
         {
             mode: 'recklesslyUnprepared',

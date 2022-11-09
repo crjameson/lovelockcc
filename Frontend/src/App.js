@@ -14,6 +14,7 @@ import {ShowNFT} from "./ShowNFT";
 import Logo from "./Assets/Logo.svg";
 import * as React from "react";
 import "./App.css";
+import {NftMintNew} from "./Nft_Mint_new";
 const {chains, provider} = configureChains(
     [chain.polygonMumbai],
     [publicProvider()]
@@ -51,13 +52,19 @@ export default function App() {
                         <h1 className="display-5 fw-bold">Mint your <span className="spanlove">Love</span>Lock</h1>
                         <p className="col-md-12 fs-4">With the LoveLock NFT it is now possible to prove your beloved partner true loyalty, honesty and faithfulness. Once the NFT minted on the Blockchain your Love is as immutable as the NFT itself. Every NFT can be customized and is unique to you and your Partner.</p>
                         <p className="col-md-12 fs-4">Start showing your Love now!</p>
-                        <MintNFT></MintNFT>
+                        {/*<MintNFT></MintNFT>*/}
                     </div>
                 </div>
                 <div className="p-5 mb-4 bg-light rounded-3">
                     <h1 className="display-5 fw-bold text-center">Your <span className="spanlove">Love</span>Lock</h1>
                     <div className="container-fluid py-5 just">
                         <ShowNFT></ShowNFT>
+                    </div>
+                </div>
+                <div className="p-5 mb-4 bg-light rounded-3">
+                    <h1 className="display-5 fw-bold text-center">Mint your <span className="spanlove">Love</span>Lock</h1>
+                    <div className="container-fluid py-5 just">
+                        <NftMintNew></NftMintNew>
                     </div>
                 </div>
 
