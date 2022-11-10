@@ -1,5 +1,5 @@
 import * as React from 'react'
-import {useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 import {
     usePrepareContractWrite,
     useContractWrite,
@@ -8,10 +8,11 @@ import {
 } from 'wagmi'
 
 import BigNumber from "bignumber.js";
-import additional from "./css/additional.css";
-import arrow from "./Assets/left-arrow-svgrepo-com.svg";
+import arrow from "../Assets/left-arrow-svgrepo-com.svg";
 import { useAccount, useConnect, useDisconnect } from 'wagmi'
-import config_file from "./Config/Config.json";
+import config_file from "../Config/Config.json";
+import { Card, Row } from 'react-bootstrap';
+import '../scss/shownft.scss'
 
 export function ShowNFT() {
     const [locks, setLocks] = useState([]);
@@ -55,7 +56,7 @@ export function ShowNFT() {
             console.log('Error', error)
             setelementLoaded(true);
 
-            setlockid(0);
+            // setlockid(0);
         },
     })
     const { dataread, isErrorread, isLoadingread } = useContractRead({
@@ -84,9 +85,8 @@ export function ShowNFT() {
         functionName: 'tokenURI',
         args: [lockid],
         onSuccess(data) {
-            let tmp_json  = JSON.parse(atob(data.slice(29)));
-            if (lockid > 0)
-            {
+            let tmp_json = JSON.parse(atob(data.slice(29)));
+            if (lockid > 0) {
                 console.log(atob(tmp_json["image"].slice(26)));
                 setNFTJSON(atob(tmp_json["image"].slice(26)));
             }
@@ -118,7 +118,7 @@ export function ShowNFT() {
         args: [],
         onSuccess(data) {
 
-//            console.log("Token counter: ", JSON.parse(data));
+            //            console.log("Token counter: ", JSON.parse(data));
             console.log("Token counter: ", data);
             //console.log(atob(tmp_json["image"].slice(26)));
             //
@@ -128,30 +128,35 @@ export function ShowNFT() {
 
 
 
-    if (elementLoaded)
-    {
-    return(
-        <div  className="container">
+    if (elementLoaded) {
+        return (
+            <div className="show-nft container">
 
-            <div className="row alignment">
+                {lockid > 0 ?
+                    (
+                        <div>
+                            <h2 className='h2 mb-4'>Your <span>Love</span>Lock</h2>
 
-                <div className="col-6 flex-column">
-                    {lockid > 0 ?
-                        (
-                            <div id="wrapper" dangerouslySetInnerHTML={{__html: nftJson}}></div>
-                        ):(
-                            <div className="row">
-                                <div className="col flex-column items-center">
-                                    <h4>Seems like you don't have a Love Lock NFT yet.</h4>
-                                </div>
+                            <div className='card-container'>
+                                <Card>
+                                    <Card.Body>
+                                        <div id="wrapper" dangerouslySetInnerHTML={{ __html: nftJson }}></div>
+                                    </Card.Body>
+                                </Card>
                             </div>
-                        )}
+                        </div>
+                    )
 
+                    : (
+                        <div className="row">
+                            <div className="col flex-column">
+                                <h4>Seems like you don't have a Love Lock NFT yet.</h4>
+                            </div>
+                        </div>
+                    )}
 
-                </div>
 
             </div>
-
-        </div>
-    )}
+        )
+    }
 }

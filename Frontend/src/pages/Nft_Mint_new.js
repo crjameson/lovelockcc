@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { Accordion, Card, Row, Col } from 'react-bootstrap'
 import {
     usePrepareContractWrite,
     useContractWrite,
@@ -6,20 +7,20 @@ import {
     useContractRead
 } from 'wagmi'
 import { useAccount, useConnect, useDisconnect } from 'wagmi'
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import ReactDOM from 'react-dom';
 import Modal from 'react-modal';
-import "./css/mint.css";
-import preview from "./Assets/svgviewer-output.svg";
+import "../scss/mint.scss";
+import preview from "../Assets/svgviewer-output.svg";
 import BigNumber from "bignumber.js";
 
 import { SketchPicker } from "@hello-pangea/color-picker";
 
-import SVG_hearth_normal from "./Locks/SVG_hearth_normal";
-import SVGhearthhearth from "./Locks/SVG_hearth_hearth";
-import SVGsquarenormal from "./Locks/SVG_square_normal";
-import SVG_square_hearth from "./Locks/SVG_square_hearth";
-import config_file from "./Config/Config.json";
+import SVG_hearth_normal from "../Locks/SVG_hearth_normal";
+import SVGhearthhearth from "../Locks/SVG_hearth_hearth";
+import SVGsquarenormal from "../Locks/SVG_square_normal";
+import SVG_square_hearth from "../Locks/SVG_square_hearth";
+import config_file from "../Config/Config.json";
 
 const customStyles = {
     content: {
@@ -50,17 +51,13 @@ export function NftMintNew() {
     const Component = components[Render_component];
 
     useEffect(() => {
-        if (Locktype == 0 && Keyholetype == 0)
-        {
+        if (Locktype == 0 && Keyholetype == 0) {
             setRender_component("square_normal");
-        } else if (Locktype == 0 && Keyholetype == 1)
-        {
+        } else if (Locktype == 0 && Keyholetype == 1) {
             setRender_component("square_hearth");
-        } else if (Locktype == 1 && Keyholetype == 0)
-        {
+        } else if (Locktype == 1 && Keyholetype == 0) {
             setRender_component("hearth_normal");
-        }else
-        {
+        } else {
             setRender_component("hearth_hearth");
         }
     }, [Locktype, Keyholetype]);
@@ -90,7 +87,7 @@ export function NftMintNew() {
         onSuccess(data) {
             //let tmp_json  = JSON.parse(atob(data.slice(29)));
             console.log(JSON.parse(data));
-            setLockprice(BigNumber(JSON.parse(data)+5000) );
+            setLockprice(BigNumber(JSON.parse(data) + 5000));
 
         },
     })
@@ -201,12 +198,13 @@ export function NftMintNew() {
 
             //args: [[bg1.substring(1), bg2.substring(1), bg3.substring(1), Locktype.toString(), Keyholetype.toString(), lockcolor.substring(1), NameText, text_color.substring(1), ,dateVal.toString(), date_color.substring(1)], NftDescription],
             onSuccess(data) {
-                console.log('Success', data)},
+                console.log('Success', data)
+            },
             onSettled(data, error) {
                 console.log('Settled', { data, error })
             }
         })
-    const { isLoading, isSuccess } = useWaitForTransaction({hash: data?.hash,});
+    const { isLoading, isSuccess } = useWaitForTransaction({ hash: data?.hash, });
 
 
     useEffect(() => {
@@ -226,63 +224,113 @@ export function NftMintNew() {
 
     }, []);
     return (
-        <div className="container flex-column">
+        <div className="mint container flex-column">
+            <Row>
+                <Col md={4}>
+                    <Component name={NameText} date={dateVal} bg1={bg1} bg2={bg2} bg3={bg3} lock_color={lockcolor} text_color={text_color} date_color={date_color} />
+                </Col>
 
-            <div className="row">
-                <div className="col"></div>
-                <div className="col-9"><div className="card">
+                <Col md={8}>
+                    <Accordion defaultActiveKey="0" className='mt-3 mt-lg-0'>
+                        <Accordion.Item eventKey="0">
+                            <Accordion.Header>Background</Accordion.Header>
+                            <Accordion.Body>
+                                <div className="d-flex flex-wrap justify-content-center">
 
-                    <Component name={NameText} date={dateVal} bg1={bg1} bg2={bg2} bg3={bg3} lock_color={lockcolor} text_color={text_color} date_color={date_color}/>
+                                    <Card>
+                                        <Card.Body>
+                                            <Card.Title>Background 1</Card.Title>
+                                            <SketchPicker onChangeComplete={(e) => { setBg1(e.hex.toString()); }} />
+                                        </Card.Body>
+                                    </Card>
+                                    <Card>
+                                        <Card.Body>
+                                            <Card.Title>Background 2</Card.Title>
+                                            <SketchPicker onChangeComplete={(e) => { setBg2(e.hex.toString()); }} />
+                                        </Card.Body>
+                                    </Card>
 
-                </div></div>
-                <div className="col"></div>
-            </div>
+                                    <Card>
+                                        <Card.Body>
+                                            <Card.Title>Background 3</Card.Title>
+                                            <SketchPicker onChangeComplete={(e) => { setBg3(e.hex.toString()); }} />
+                                        </Card.Body>
+                                    </Card>
+                                </div>
+                            </Accordion.Body>
+                        </Accordion.Item>
+                        <Accordion.Item eventKey="1">
 
-            <div className="row">
-                <div className="col"><h3>Background 1</h3><SketchPicker
-                    onChangeComplete={(e) => { setBg1(e.hex.toString()); }}/></div>
-                <div className="col"><h3>Background 2</h3><SketchPicker
-                    onChangeComplete={(e) => { setBg2(e.hex.toString()); }}/></div>
-                <div className="col"><h3>Background 3</h3><SketchPicker
-                    onChangeComplete={(e) => { setBg3(e.hex.toString()); }}/></div>
-            </div>
-            <div className="row">
-                <div className="col"><h3>Lock Color</h3><SketchPicker
-                    onChangeComplete={(e) => { setLockcolor(e.hex.toString()); }}/></div>
-                <div className="col"></div>
-                <div className="col"></div>
-            </div>
+                            <Accordion.Header>Lock</Accordion.Header>
+                            <Accordion.Body>
+                                <Card>
+                                    <Card.Body>
+                                        <Card.Title>Lock Color</Card.Title>
+                                        <SketchPicker onChangeComplete={(e) => { setLockcolor(e.hex.toString()); }} />
+                                    </Card.Body>
+                                </Card>
+                            </Accordion.Body>
+                        </Accordion.Item>
+
+                        <Accordion.Item eventKey="2">
+                            <Accordion.Header>Text</Accordion.Header>
+                            <Accordion.Body>
+                                <div className="d-flex flex-wrap justify-content-center">
+
+                                    <Card>
+                                        <Card.Body>
+                                            <Card.Title>Text Color</Card.Title>
+                                            <SketchPicker onChangeComplete={(e) => { setTextcolor(e.hex.toString()); }} />
+                                        </Card.Body>
+                                    </Card>
+
+                                    <Card>
+                                        <Card.Body>
+                                            <Card.Title>Date Color</Card.Title>
+                                            <SketchPicker onChangeComplete={(e) => { setDateColor(e.hex.toString()); }} />
+                                        </Card.Body>
+                                    </Card>
+
+                                </div>
+
+                                <div className='form-group mb-3'>
+                                    <label className='text-muted'>NFT Description</label>
+                                    <textarea rows={5} className="form-control h-100" id="inputcustomtext" placeholder="Your Description" maxLength="1024" onChange={(e) => setNftDescription(e.target.value)} ></textarea>
+                                </div>
 
 
+                                <div className='form-group mb-2'>
+                                    <label className='text-muted'>Custom Text</label>
+                                    <input type="text" className="form-control" id="inputcustomtext" placeholder="Your Custom Text" maxLength="28" onChange={(e) => { setNameText(e.target.value); }} />
+                                </div>
+                                <div className='form-group'>
+                                    <input type="date" className="form-control" id="inputcustomdate" placeholder="Date" onChange={(e) => { setDateval(e.target.value); }} />
+                                </div>
+                            </Accordion.Body>
+                        </Accordion.Item>
 
-            <select name="locktype" className="form-control" id="alertype" onChange={(e) => setLocktype(e.target.value)}>
-                <option value="0">Square Shape</option>
-                <option value="1">Hearth Shape</option>
-            </select>
-            <select name="keyhole" className="form-control" id="alertype" onChange={(e) => setKeyholetype(e.target.value)}>
-                <option value="0">Normal Keyhole</option>
-                <option value="1">Hearth Keyhole</option>
-            </select>
-            <input type="text" className="form-control" id="inputcustomtext"
-                   placeholder="Your Text"  maxLength="28" onChange={(e) => { setNameText(e.target.value); }}/>
-            <input type="date" className="form-control" id="inputcustomdate"
-                   placeholder="Date" onChange={(e) => { setDateval(e.target.value); }}/>
+                        <Accordion.Item>
+                            <Accordion.Header>Shape</Accordion.Header>
+                            <Accordion.Body>
+                                <div className='form-group mb-4'>
+                                    <select name="locktype" className="form-control" id="alertype" onChange={(e) => setLocktype(e.target.value)}>
+                                        <option value="0">Square Shape</option>
+                                        <option value="1">Hearth Shape</option>
+                                    </select>
+                                </div>
+                                <div className='form-group mb-4'>
+                                    <select name="keyhole" className="form-control" id="alertype" onChange={(e) => setKeyholetype(e.target.value)}>
+                                        <option value="0">Normal Keyhole</option>
+                                        <option value="1">Hearth Keyhole</option>
+                                    </select>
+                                </div>
+                            </Accordion.Body>
+                        </Accordion.Item>
+                    </Accordion>
 
-            <div className="row">
-                <div className="col"><h3>Text Color</h3><SketchPicker
-                    onChangeComplete={(e) => { setTextcolor(e.hex.toString()); }}/></div>
-                <div className="col"><h3>Date Color</h3><SketchPicker
-                    onChangeComplete={(e) => { setDateColor(e.hex.toString()); }}/></div>
-                <div className="col"><h3>NFT Description</h3>
-                    <input type="text" className="form-control" id="inputcustomtext"
-                           placeholder="Your Text"  maxLength="1024" onChange={(e) => { setNftDescription(e.target.value); }}/>
-                </div>
-            </div>
-
-
-
-            <button className="btn btn-primary btn-lg" onClick={() => write?.()}>Mint your NFT now</button>
-
+                    <button className="btn btn-primary btn-lg w-100 mt-3" onClick={() => write?.()}>Mint your NFT now</button>
+                </Col>
+            </Row>
 
         </div>
     )

@@ -1,0 +1,23 @@
+.show-nft {
+    padding: 2rem 0;
+
+    .h2 {
+        text-align: center;
+        font-weight: 600;
+        span {
+            color: #e07a9a;
+        }
+    }
+
+    .card-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        .card {
+            max-width: 40rem;
+            width: 100%;
+            border-color: rgba(#e07a9a, 0.5);
+        }
+    }
+}

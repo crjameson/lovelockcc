@@ -1,0 +1,24 @@
+$primary: #4E76F4;
+
+
+@import '~bootstrap/scss/bootstrap.scss';
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+
+*{
+    font-family: 'Inter', sans-serif;
+}
+
+.connect-wallet-container{
+    button{
+        background: #4E76F4 !important;
+    }
+}
+
+.btn-primary{
+    color: #fff;
+
+    &:hover{
+        color: #fff;
+    }
+}
