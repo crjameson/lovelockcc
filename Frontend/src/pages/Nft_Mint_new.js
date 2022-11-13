@@ -226,13 +226,28 @@ export function NftMintNew() {
     return (
         <div className="mint container flex-column">
             <Row>
-                <Col md={4}>
-                    <Component name={NameText} date={dateVal} bg1={bg1} bg2={bg2} bg3={bg3} lock_color={lockcolor} text_color={text_color} date_color={date_color} />
-                </Col>
-
                 <Col md={8}>
                     <Accordion defaultActiveKey="0" className='mt-3 mt-lg-0'>
+
                         <Accordion.Item eventKey="0">
+                            <Accordion.Header>Shape</Accordion.Header>
+                            <Accordion.Body>
+                                <div className='form-group mb-4'>
+                                    <select name="locktype" className="form-control" id="alertype" onChange={(e) => setLocktype(e.target.value)}>
+                                        <option value="0">Square Shape</option>
+                                        <option value="1">Hearth Shape</option>
+                                    </select>
+                                </div>
+                                <div className='form-group mb-4'>
+                                    <select name="keyhole" className="form-control" id="alertype" onChange={(e) => setKeyholetype(e.target.value)}>
+                                        <option value="0">Normal Keyhole</option>
+                                        <option value="1">Hearth Keyhole</option>
+                                    </select>
+                                </div>
+                            </Accordion.Body>
+                        </Accordion.Item>
+
+                        <Accordion.Item eventKey="1">
                             <Accordion.Header>Background</Accordion.Header>
                             <Accordion.Body>
                                 <div className="d-flex flex-wrap justify-content-center">
@@ -259,8 +274,8 @@ export function NftMintNew() {
                                 </div>
                             </Accordion.Body>
                         </Accordion.Item>
-                        <Accordion.Item eventKey="1">
 
+                        <Accordion.Item eventKey="2">
                             <Accordion.Header>Lock</Accordion.Header>
                             <Accordion.Body>
                                 <Card>
@@ -272,7 +287,7 @@ export function NftMintNew() {
                             </Accordion.Body>
                         </Accordion.Item>
 
-                        <Accordion.Item eventKey="2">
+                        <Accordion.Item eventKey="3">
                             <Accordion.Header>Text</Accordion.Header>
                             <Accordion.Body>
                                 <div className="d-flex flex-wrap justify-content-center">
@@ -309,26 +324,13 @@ export function NftMintNew() {
                             </Accordion.Body>
                         </Accordion.Item>
 
-                        <Accordion.Item>
-                            <Accordion.Header>Shape</Accordion.Header>
-                            <Accordion.Body>
-                                <div className='form-group mb-4'>
-                                    <select name="locktype" className="form-control" id="alertype" onChange={(e) => setLocktype(e.target.value)}>
-                                        <option value="0">Square Shape</option>
-                                        <option value="1">Hearth Shape</option>
-                                    </select>
-                                </div>
-                                <div className='form-group mb-4'>
-                                    <select name="keyhole" className="form-control" id="alertype" onChange={(e) => setKeyholetype(e.target.value)}>
-                                        <option value="0">Normal Keyhole</option>
-                                        <option value="1">Hearth Keyhole</option>
-                                    </select>
-                                </div>
-                            </Accordion.Body>
-                        </Accordion.Item>
+
                     </Accordion>
 
                     <button className="btn btn-primary btn-lg w-100 mt-3" onClick={() => write?.()}>Mint your NFT now</button>
+                </Col>
+                <Col md={4}>
+                    <Component name={NameText} date={dateVal} bg1={bg1} bg2={bg2} bg3={bg3} lock_color={lockcolor} text_color={text_color} date_color={date_color} />
                 </Col>
             </Row>
 

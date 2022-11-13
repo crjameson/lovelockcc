@@ -17,7 +17,7 @@ import Raffle from './pages/Raffle.js';
 import { ShowNFT } from "./pages/ShowNFT";
 import { NftMintNew } from "./pages/Nft_Mint_new";
 import NavBar from "./components/NavBar";
-
+import Homenew from "./pages/Home2";
 
 
 const { chains, provider } = configureChains(
@@ -46,7 +46,7 @@ export default function App() {
                 <NavBar />
                 <Container>
                     <Routes>
-                        <Route path="/" element={<Home />} />
+                        <Route path="/" element={<Homenew />} />
                         <Route path="/your-LoveLock" element={<ShowNFT />} />
                         <Route path="/mint" element={<NftMintNew />} />
                         <Route path="/raffle" element={<Raffle />} />
