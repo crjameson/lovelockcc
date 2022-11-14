@@ -8,10 +8,10 @@ import '../scss/navbar.scss'
 
 export default function NavBar() {
     return (
-        <Navbar expand="lg" >
-            <Container className='border-bottom'>
+        <Navbar expand="lg" className='border-bottom'>
+            <Container>
                 <Link to="/" className='navbar-brand'>
-                    <img src={Logo} alt="logo" width="250" height="75" />
+                    <img src={Logo} alt="logo"/>
                 </Link>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">

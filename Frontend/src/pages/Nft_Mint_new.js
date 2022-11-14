@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Accordion, Card, Row, Col } from 'react-bootstrap'
+import { Accordion, Card, Row, Col, Container } from 'react-bootstrap'
 import {
     usePrepareContractWrite,
     useContractWrite,
@@ -14,7 +14,7 @@ import "../scss/mint.scss";
 import preview from "../Assets/svgviewer-output.svg";
 import BigNumber from "bignumber.js";
 
-import { SketchPicker } from "@hello-pangea/color-picker";
+import { SketchPicker, CompactPicker } from "@hello-pangea/color-picker";
 
 import SVG_hearth_normal from "../Locks/SVG_hearth_normal";
 import SVGhearthhearth from "../Locks/SVG_hearth_hearth";
@@ -27,18 +27,18 @@ const customStyles = {
     },
 };
 export function NftMintNew() {
-    const [NameText, setNameText] = useState("your custom Text");
-    const [NftDescription, setNftDescription] = useState("your custom description");
+    const [NameText, setNameText] = useState("Eva + Maximilian");
+    const [NftDescription, setNftDescription] = useState("Eva + Maximilian");
     const [dateVal, setDateval] = useState("01.01.2022");
-    const [bg1, setBg1] = useState("#257e38");
-    const [bg2, setBg2] = useState("#d1d1d1");
-    const [bg3, setBg3] = useState("#b3b3b3");
-    const [lockcolor, setLockcolor] = useState("#A9A9A");
+    const [bg1, setBg1] = useState("#FFFFFF");
+    const [bg2, setBg2] = useState("#E6E6E6");
+    const [bg3, setBg3] = useState("#D5D5D5");
+    const [lockcolor, setLockcolor] = useState("#e5bd5c");
     const [Locktype, setLocktype] = useState(0);
     const [Keyholetype, setKeyholetype] = useState(0);
     const [Render_component, setRender_component] = useState("square_normal");
-    const [text_color, setTextcolor] = useState("#fff");
-    const [date_color, setDateColor] = useState("#fff");
+    const [text_color, setTextcolor] = useState("#1F1F1F");
+    const [date_color, setDateColor] = useState("#1F1F1F");
     const [lockprice, setLockprice] = useState("");
 
 
@@ -86,7 +86,7 @@ export function NftMintNew() {
         args: [],
         onSuccess(data) {
             //let tmp_json  = JSON.parse(atob(data.slice(29)));
-            console.log(JSON.parse(data));
+            //console.log(JSON.parse(data));
             setLockprice(BigNumber(JSON.parse(data) + 5000));
 
         },
@@ -207,27 +207,11 @@ export function NftMintNew() {
     const { isLoading, isSuccess } = useWaitForTransaction({ hash: data?.hash, });
 
 
-    useEffect(() => {
-
-        console.log(bg1.substring(1));
-        console.log(bg2.substring(1));
-        console.log(bg3.substring(1));
-        console.log(Locktype.toString());
-        console.log(Keyholetype.toString());
-        console.log(lockcolor.substring(1));
-        console.log(NameText.substring(1));
-        console.log(text_color.substring(1));
-        console.log(dateVal.substring(1));
-        console.log(date_color.substring(1));
-        console.log(NftDescription.substring(1));
-
-
-    }, []);
     return (
-        <div className="mint container flex-column">
+        <Container className="mint flex-column">
             <Row>
                 <Col md={8}>
-                    <Accordion defaultActiveKey="0" className='mt-3 mt-lg-0'>
+                    <Accordion defaultActiveKey="0">
 
                         <Accordion.Item eventKey="0">
                             <Accordion.Header>Shape</Accordion.Header>
@@ -255,20 +239,22 @@ export function NftMintNew() {
                                     <Card>
                                         <Card.Body>
                                             <Card.Title>Background 1</Card.Title>
-                                            <SketchPicker onChangeComplete={(e) => { setBg1(e.hex.toString()); }} />
+                                            <CompactPicker onChangeComplete={(e) => { setBg1(e.hex.toString()); }} />
                                         </Card.Body>
                                     </Card>
                                     <Card>
                                         <Card.Body>
                                             <Card.Title>Background 2</Card.Title>
-                                            <SketchPicker onChangeComplete={(e) => { setBg2(e.hex.toString()); }} />
+                                            <CompactPicker onChangeComplete={(e) => { setBg2(e.hex.toString()); }} />
+
                                         </Card.Body>
                                     </Card>
 
                                     <Card>
                                         <Card.Body>
                                             <Card.Title>Background 3</Card.Title>
-                                            <SketchPicker onChangeComplete={(e) => { setBg3(e.hex.toString()); }} />
+                                            <CompactPicker onChangeComplete={(e) => { setBg3(e.hex.toString()); }} />
+
                                         </Card.Body>
                                     </Card>
                                 </div>
@@ -281,7 +267,7 @@ export function NftMintNew() {
                                 <Card>
                                     <Card.Body>
                                         <Card.Title>Lock Color</Card.Title>
-                                        <SketchPicker onChangeComplete={(e) => { setLockcolor(e.hex.toString()); }} />
+                                        <CompactPicker onChangeComplete={(e) => { setLockcolor(e.hex.toString()); }} />
                                     </Card.Body>
                                 </Card>
                             </Accordion.Body>
@@ -295,14 +281,15 @@ export function NftMintNew() {
                                     <Card>
                                         <Card.Body>
                                             <Card.Title>Text Color</Card.Title>
-                                            <SketchPicker onChangeComplete={(e) => { setTextcolor(e.hex.toString()); }} />
+                                            <CompactPicker onChangeComplete={(e) => { setTextcolor(e.hex.toString()); }} />
                                         </Card.Body>
                                     </Card>
 
                                     <Card>
                                         <Card.Body>
                                             <Card.Title>Date Color</Card.Title>
-                                            <SketchPicker onChangeComplete={(e) => { setDateColor(e.hex.toString()); }} />
+                                            <CompactPicker onChangeComplete={(e) => { setDateColor(e.hex.toString()); }} />
+
                                         </Card.Body>
                                     </Card>
 
@@ -327,14 +314,13 @@ export function NftMintNew() {
 
                     </Accordion>
 
-                    <button className="btn btn-primary btn-lg w-100 mt-3" onClick={() => write?.()}>Mint your NFT now</button>
+                    <button className="btn btn-primary btn-lg w-100 mt-3" onClick={() => write?.()}>Mint your NFT</button>
                 </Col>
-                <Col md={4}>
+                <Col md={4}  className='mt-3 mt-lg-0'>
                     <Component name={NameText} date={dateVal} bg1={bg1} bg2={bg2} bg3={bg3} lock_color={lockcolor} text_color={text_color} date_color={date_color} />
                 </Col>
             </Row>
-
-        </div>
+        </Container>
     )
 }
 

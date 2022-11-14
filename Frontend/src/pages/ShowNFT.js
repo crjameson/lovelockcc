@@ -11,7 +11,7 @@ import BigNumber from "bignumber.js";
 import arrow from "../Assets/left-arrow-svgrepo-com.svg";
 import { useAccount, useConnect, useDisconnect } from 'wagmi'
 import config_file from "../Config/Config.json";
-import { Card, Row } from 'react-bootstrap';
+import { Card, Container, Row } from 'react-bootstrap';
 import '../scss/shownft.scss'
 
 export function ShowNFT() {
@@ -130,7 +130,7 @@ export function ShowNFT() {
 
     if (elementLoaded) {
         return (
-            <div className="show-nft container">
+            <Container className="show-nft">
 
                 {lockid > 0 ?
                     (
@@ -156,7 +156,7 @@ export function ShowNFT() {
                     )}
 
 
-            </div>
+            </Container>
         )
     }
 }

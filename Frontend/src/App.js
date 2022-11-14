@@ -44,15 +44,12 @@ export default function App() {
         <WagmiConfig client={wagmiClient}>
             <RainbowKitProvider chains={chains}>
                 <NavBar />
-                <Container>
                     <Routes>
                         <Route path="/" element={<Homenew />} />
                         <Route path="/your-LoveLock" element={<ShowNFT />} />
                         <Route path="/mint" element={<NftMintNew />} />
                         <Route path="/raffle" element={<Raffle />} />
                     </Routes>
-                </Container>
-
             </RainbowKitProvider>
         </WagmiConfig>
     )
