@@ -89,11 +89,11 @@ const SVGsquarenormal = (props) => (
             d="M150 138.5s-.1-38.7-.1-39.4c0-33.1 27-60.1 60.1-60.1s60.1 27 60.1 60.1c0 .6-.1 39.4-.1 39.4h-.9s.1-38.7.1-39.4c0-32.7-26.6-59.2-59.2-59.2s-59.2 26.6-59.2 59.2c0 .6.1 39.4.1 39.4h-.9z"
         />
         <path
-            fill="#E5BD5C"
+            fill={props.lock_color}
             d="M298.4 138.5H120.9c-1.6 0-2.9 1.3-2.9 2.9v159.8c0 1.6 1.3 2.9 2.9 2.9h177.5c1.6 0 2.9-1.3 2.9-2.9V141.4c0-1.6-1.3-2.9-2.9-2.9z"
         />
         <linearGradient
-            id="a"
+            id="b"
             gradientUnits="userSpaceOnUse"
             x1={118}
             y1={221.3}
@@ -151,7 +151,7 @@ const SVGsquarenormal = (props) => (
             />
         </linearGradient>
         <path
-            fill={props.lock_color}
+            fill="url(#b)"
             d="M298.4 138.5H120.9c-1.6 0-2.9 1.3-2.9 2.9v159.8c0 1.6 1.3 2.9 2.9 2.9h177.5c1.6 0 2.9-1.3 2.9-2.9V141.4c0-1.6-1.3-2.9-2.9-2.9z"
         />
         <path
