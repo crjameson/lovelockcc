@@ -36,7 +36,7 @@ function CountdownTimer(){
                 setExpiryTime(false);
             }
 
-        }, 10000);
+        }, 1000);
     }
 
     useEffect(() => {
