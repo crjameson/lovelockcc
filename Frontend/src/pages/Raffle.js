@@ -110,9 +110,12 @@ const Raffle = () => {
             from: address
         },
         onSuccess(data) {
+            if (address != undefined)
+            {
+                console.log("hasWon Data: ", (JSON.parse(data)));
+                setUserwon(JSON.parse(data));
+            }
 
-            console.log("hasWon Data: ", (JSON.parse(data)));
-            setUserwon(JSON.parse(data));
 
         },
         onError(error) {
@@ -184,9 +187,6 @@ const Raffle = () => {
                     <Col md={8}><p className="col-md-12 fs-5">Last Month the Jackpot was {last_pricepot.toFixed(3)} Matic.</p>
                     </Col>
                 </Row>
-
-
-
 
                 {user_won && (
                     <>
