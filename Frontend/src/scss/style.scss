@@ -1,0 +1,51 @@
+$primary: #4e76f4;
+
+@import "~bootstrap/scss/bootstrap.scss";
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700;900&display=swap");
+@import "./variables.scss";
+
+* {
+    font-family: "Lato", sans-serif;
+}
+
+body {
+    overflow-x: hidden;
+    font-size: 1rem;
+
+    @media (max-width: $md) {
+        font-size: 0.95rem;
+    }
+}
+
+p {
+    font-size: 1.25rem;
+
+    @media (max-width: $md) {
+        font-size: 1rem;
+    }
+}
+
+.connect-wallet-container {
+    button {
+        background: #4e76f4 !important;
+    }
+}
+
+.btn-primary {
+    color: #fff;
+
+    &:hover {
+        color: #fff;
+    }
+}
+
+.navbar-brand {
+    img {
+        max-width: 250px;
+        height: 75px;
+
+        @media (max-width: $md) {
+            max-width: 170px;
+        }
+    }
+}

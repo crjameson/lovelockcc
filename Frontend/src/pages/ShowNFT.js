@@ -1,5 +1,5 @@
 import * as React from 'react'
-import {useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 import {
     usePrepareContractWrite,
     useContractWrite,
@@ -8,9 +8,11 @@ import {
 } from 'wagmi'
 
 import BigNumber from "bignumber.js";
-import additional from "./css/additional.css";
-import arrow from "./Assets/left-arrow-svgrepo-com.svg";
+import arrow from "../Assets/left-arrow-svgrepo-com.svg";
 import { useAccount, useConnect, useDisconnect } from 'wagmi'
+import config_file from "../Config/Config.json";
+import { Card, Container, Row } from 'react-bootstrap';
+import '../scss/shownft.scss'
 
 export function ShowNFT() {
     const [locks, setLocks] = useState([]);
@@ -22,7 +24,8 @@ export function ShowNFT() {
 
 
     const { datareadfirst, isErrorreadfirst, isLoadingreadfirst } = useContractRead({
-        address: '0xD32b8896517537467f0e3AEDf093D27554afb60b',
+        address: config_file.contract_address,
+
         abi: [
             {
                 name: 'getMyLock',
@@ -46,12 +49,18 @@ export function ShowNFT() {
         onSuccess(data) {
 
             console.log("getMyLock Data: ", data);
-            //setlockid(JSON.parse(data));
-            //setelementLoaded(true);
+            setlockid(JSON.parse(data));
+            setelementLoaded(true);
+        },
+        onError(error) {
+            console.log('Error', error)
+            setelementLoaded(true);
+
+            // setlockid(0);
         },
     })
     const { dataread, isErrorread, isLoadingread } = useContractRead({
-        address: '0xD32b8896517537467f0e3AEDf093D27554afb60b',
+        address: config_file.contract_address,
         abi: [
             {
                 name: 'tokenURI',
@@ -76,10 +85,9 @@ export function ShowNFT() {
         functionName: 'tokenURI',
         args: [lockid],
         onSuccess(data) {
-            let tmp_json  = JSON.parse(atob(data.slice(29)));
-            console.log("lockid: ", lockid);
-            if (lockid > 0)
-            {
+            let tmp_json = JSON.parse(atob(data.slice(29)));
+            if (lockid > 0) {
+                console.log(atob(tmp_json["image"].slice(26)));
                 setNFTJSON(atob(tmp_json["image"].slice(26)));
             }
             //console.log(atob(tmp_json["image"].slice(26)));
@@ -90,7 +98,7 @@ export function ShowNFT() {
         },
     })
     const { datareadcount, isErrorreadcout, isLoadingreadc } = useContractRead({
-        address: '0xD32b8896517537467f0e3AEDf093D27554afb60b',
+        address: config_file.contract_address,
         abi: [
             {
                 name: 'tokenCounter',
@@ -110,7 +118,8 @@ export function ShowNFT() {
         args: [],
         onSuccess(data) {
 
-            console.log("Token counter: ", JSON.parse(data));
+            //            console.log("Token counter: ", JSON.parse(data));
+            console.log("Token counter: ", data);
             //console.log(atob(tmp_json["image"].slice(26)));
             //
             //document.getElementById("wrapper").innerHTML = nftJson
@@ -119,31 +128,35 @@ export function ShowNFT() {
 
 
 
+    if (elementLoaded) {
+        return (
+            <Container className="show-nft">
 
-    if (elementLoaded)
-    {
-    return(
-        <div  className="container">
+                {lockid > 0 ?
+                    (
+                        <div>
+                            <h2 className='h2 mb-4'>Your <span>Love</span>Lock</h2>
 
-            <div className="row alignment">
-
-                <div className="col-6 flex-column">
-                    {lockid > 0 ?
-                        (
-                            <div id="wrapper" dangerouslySetInnerHTML={{__html: nftJson}}></div>
-                        ):(
-                            <div className="row">
-                                <div className="col flex-column items-center">
-                                    <h4>Seems like you don't have a Love Lock NFT yet.</h4>
-                                </div>
+                            <div className='card-container'>
+                                <Card>
+                                    <Card.Body>
+                                        <div id="wrapper" dangerouslySetInnerHTML={{ __html: nftJson }}></div>
+                                    </Card.Body>
+                                </Card>
                             </div>
-                        )}
+                        </div>
+                    )
+
+                    : (
+                        <div className="row">
+                            <div className="col flex-column">
+                                <h4>Seems like you don't have a Love Lock NFT yet.</h4>
+                            </div>
+                        </div>
+                    )}
 
 
-                </div>
-
-            </div>
-
-        </div>
-    )}
+            </Container>
+        )
+    }
 }

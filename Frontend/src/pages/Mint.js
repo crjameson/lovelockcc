@@ -6,10 +6,10 @@ import {
     useContractRead
 } from 'wagmi'
 import { useAccount, useConnect, useDisconnect } from 'wagmi'
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import ReactDOM from 'react-dom';
 import Modal from 'react-modal';
-import "./css/mint.css";
+import "./scss/mint.scss";
 import preview from "./Assets/svgviewer-output.svg";
 import BigNumber from "bignumber.js";
 
@@ -148,14 +148,15 @@ export function MintNFT() {
                 from: address,
                 value: lockprice.toString(),
             },
-            args: [["636363", "CFCFCF", "ABABAB", "FF0000", "00FF00", "0000FF", lovetext, "FF0000", "FFFFFF",lovedate.toString(),"000000"], lovetext],
+            args: [["636363", "CFCFCF", "ABABAB", "FF0000", "00FF00", "0000FF", lovetext, "FF0000", "FFFFFF", lovedate.toString(), "000000"], lovetext],
             onSuccess(data) {
-                console.log('Success', data)},
+                console.log('Success', data)
+            },
             onSettled(data, error) {
                 console.log('Settled', { data, error })
             }
         })
-    const { isLoading, isSuccess } = useWaitForTransaction({hash: data?.hash,});
+    const { isLoading, isSuccess } = useWaitForTransaction({ hash: data?.hash, });
 
     useEffect(() => {
 
@@ -177,7 +178,7 @@ export function MintNFT() {
 
 
     return (
-        <div>
+        <div className='mint'>
 
             <button className="btn btn-primary btn-lg" onClick={openModal} disabled={!isConnected} >{isConnected ? 'Mint your NFT now' : 'Connect your Wallet to Mint your custom NFT'}</button>
             <Modal
@@ -190,127 +191,127 @@ export function MintNFT() {
                 contentLabel="Example Modal">
                 <header >
                     <span onClick={() => closeModal()}
-                          className="close-button topright">&times;</span>
+                        className="close-button topright">&times;</span>
                 </header>
                 {isSuccess == true ? (
                     <div className="container">
                         <div className="row">
                             <div className="col flex-column items-center"><h1>Successfully minted your NFT!</h1></div></div>
-                            <div className="row">
+                        <div className="row">
                             <div className="col flex-column items-center alignment"><button className="btn btn-primary btn-lg alignment" type="button" onClick={() => { closeModal(); }}>Show me my Lock</button></div>
                         </div>
 
 
                     </div>
-                ): isLoading == true ?
+                ) : isLoading == true ?
 
                     (
                         <div className="container">
                             <div className="row">
                                 <div className="col flex-column items-center"><h1>Minting your NFT..</h1></div></div>
 
+                        </div>
+
+                    ) : (
+                        <div className="container choosecontainer">
+                            <div className="row alignment mt-3">
+
+                                <div className="col alignment"><h1 className="display-5 fw-bold">Mint your own <span className="spanlove">Love</span>Lock</h1></div>
+                            </div>
+                            <div className="row alignment mt-3">
+
+                                <div className="col order-1 alignment"><input type="radio" name="card" id="card_one" />
+                                    <label htmlFor="card_one">
+                                        <div className="card" onClick={() => { setLockselected(1); }}>
+                                            <span className="check_btn"><i className="fas fa-check"></i></span>
+                                            <div className="imgdiv">
+                                                <img className="imgselect" src={preview} alt="" />
+
+                                            </div>
+                                            <h2 className="title">Silver Lock</h2>
+                                            <ul>
+                                                <li>Color: <span>Silver</span></li>
+                                                <li>Price: <span>10 USD</span></li>
+
+                                            </ul>
+                                        </div>
+                                    </label></div>
+
+                                <div className="col order-2 alignment"><input type="radio" name="card" id="card_two" />
+                                    <label htmlFor="card_two">
+                                        <div className="card" onClick={() => { setLockselected(2); }}>
+                                            <span className="check_btn"><i className="fas fa-check"></i></span>
+                                            <div className="imgdiv">
+                                                <img className="imgselect" src={preview} alt="" />
+                                            </div>
+                                            <h2 className="title">Gold Lock</h2>
+                                            <ul>
+                                                <li>Color: <span>Gold</span></li>
+                                                <li>Price: <span>20 USD</span></li>
+
+                                            </ul>
+                                        </div>
+                                    </label></div>
+                                <div className="col order-3 alignment">
+                                    <input type="radio" name="card" id="card_three" />
+
+
+
+
+
+                                    <label htmlFor="card_three">
+                                        <div className="card" onClick={() => { setLockselected(3); }}>
+                                            <span className="check_btn"><i className="fas fa-check"></i></span>
+                                            <div className="imgdiv">
+                                                <img className="imgselect" src={preview} alt="" />
+                                            </div>
+                                            <h2 className="title">Diamond Lock</h2>
+                                            <ul>
+                                                <li>Color: <span>Diamond</span></li>
+                                                <li>Price: <span>50 USD</span></li>
+
+                                            </ul>
+                                        </div>
+                                    </label></div>
+
                             </div>
 
-                    ):(
-                    <div className="container choosecontainer">
-                        <div className="row alignment mt-3">
 
-                            <div className="col alignment"><h1  className="display-5 fw-bold">Mint your own <span className="spanlove">Love</span>Lock</h1></div>
-                        </div>
-                        <div className="row alignment mt-3">
+                            <div className="row alignment mt-3">
+                                <div className="col alignment">
+                                    <form className="form-inline">
+                                        <div className="form-row  mt-4">
+                                            <div className="form-group col alignment">
+                                                <h2>Customize your NFT</h2>
+                                            </div>
+                                        </div>
+                                        <div className="form-row  mt-4">
+                                            <div className="form-group col alignment">
+                                                <label htmlFor="inputEmail4">Love Message </label>
+                                                <input type="text" className="form-control" id="inputEmail4"
+                                                    placeholder="I Love you" />
+                                            </div>
+                                        </div>
+                                        <div className="form-row  mt-2">
+                                            <div className="form-group col alignment">
+                                                <label htmlFor="inputPassword4">Anniversary Date </label>
+                                                <input type="date" className="form-control" id="inputPassword4"
+                                                    placeholder="text" />
+                                            </div>
+                                        </div>
+                                        <div className="form-row mt-3">
+                                            <div className="form-group col alignment">
+                                                <button className="btn btn-primary btn-lg" type="button" disabled={!isConnected} onClick={() => write?.()}>
+                                                    {isLoading ? 'Minting...' : 'Mint Now'}
+                                                </button>
+                                            </div>
 
-                            <div className="col order-1 alignment"><input type="radio" name="card" id="card_one" />
-                                <label htmlFor="card_one">
-                                    <div className="card"  onClick={() => { setLockselected(1); }}>
-                                        <span className="check_btn"><i className="fas fa-check"></i></span>
-                                        <div className="imgdiv">
-                                            <img className="imgselect" src={preview} alt=""/>
 
                                         </div>
-                                        <h2 className="title">Silver Lock</h2>
-                                        <ul>
-                                            <li>Color: <span>Silver</span></li>
-                                            <li>Price: <span>10 USD</span></li>
-
-                                        </ul>
-                                    </div>
-                                </label></div>
-
-                            <div className="col order-2 alignment"><input type="radio" name="card" id="card_two"/>
-                                <label htmlFor="card_two">
-                                    <div className="card" onClick={() => { setLockselected(2); }}>
-                                        <span className="check_btn"><i className="fas fa-check"></i></span>
-                                        <div className="imgdiv">
-                                            <img className="imgselect" src={preview} alt=""/>
-                                        </div>
-                                        <h2 className="title">Gold Lock</h2>
-                                        <ul>
-                                            <li>Color: <span>Gold</span></li>
-                                            <li>Price: <span>20 USD</span></li>
-
-                                        </ul>
-                                    </div>
-                                </label></div>
-                            <div className="col order-3 alignment">
-                                <input type="radio" name="card" id="card_three"/>
-
-
-
-
-
-                                <label htmlFor="card_three">
-                                    <div className="card" onClick={() => { setLockselected(3); }}>
-                                        <span className="check_btn"><i className="fas fa-check"></i></span>
-                                        <div className="imgdiv">
-                                            <img className="imgselect" src={preview} alt=""/>
-                                        </div>
-                                        <h2 className="title">Diamond Lock</h2>
-                                        <ul>
-                                            <li>Color: <span>Diamond</span></li>
-                                            <li>Price: <span>50 USD</span></li>
-
-                                        </ul>
-                                    </div>
-                                </label></div>
-
-                        </div>
-
-
-                        <div className="row alignment mt-3">
-                            <div className="col alignment">
-                                <form className="form-inline">
-                                    <div className="form-row  mt-4">
-                                        <div className="form-group col alignment">
-                                            <h2>Customize your NFT</h2>
-                                        </div>
-                                    </div>
-                                    <div className="form-row  mt-4">
-                                        <div className="form-group col alignment">
-                                            <label htmlFor="inputEmail4">Love Message </label>
-                                            <input type="text" className="form-control" id="inputEmail4"
-                                                   placeholder="I Love you"/>
-                                        </div>
-                                    </div>
-                                    <div className="form-row  mt-2">
-                                        <div className="form-group col alignment">
-                                            <label htmlFor="inputPassword4">Anniversary Date </label>
-                                            <input type="date" className="form-control" id="inputPassword4"
-                                                   placeholder="text"/>
-                                        </div>
-                                    </div>
-                                    <div className="form-row mt-3">
-                                        <div className="form-group col alignment">
-                                            <button className="btn btn-primary btn-lg" type="button" disabled={!isConnected} onClick={() => write?.()}>
-                                                {isLoading ? 'Minting...' : 'Mint Now'}
-                                            </button>
-                                        </div>
-
-
-                                    </div>
-                                </form>
+                                    </form>
+                                </div>
                             </div>
                         </div>
-                    </div>
                     )}
 
 
