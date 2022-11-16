@@ -210,6 +210,11 @@ export function NftMintNew() {
     return (
         <Container className="mint flex-column">
             <Row>
+            <Col md={8}>
+                <p>Here you can mint your unique LoveLock NFT. After minting the NFT it will be stored immutable on the blockchain and send to your wallet. </p>
+            </Col>
+            </Row>
+            <Row>
                 <Col md={8}>
                     <Accordion defaultActiveKey="0">
 
@@ -302,11 +307,11 @@ export function NftMintNew() {
 
 
                                 <div className='form-group mb-2'>
-                                    <label className='text-muted'>Custom Text</label>
-                                    <input type="text" className="form-control" id="inputcustomtext" placeholder="Your Custom Text" maxLength="28" onChange={(e) => { setNameText(e.target.value); }} />
+                                    <label className='text-muted'>Custom Text </label>
+                                    <input type="text" className="form-control" id="inputcustomtext" placeholder="Your Custom Text (all letters, numbers and +-. is allowed)" maxLength="28" onChange={(e) => { setNameText(e.target.value); }} />
                                 </div>
                                 <div className='form-group'>
-                                    <input type="date" className="form-control" id="inputcustomdate" placeholder="Date" onChange={(e) => { setDateval(e.target.value); }} />
+                                    <input type="text" className="form-control" id="inputcustomdate" placeholder="Date (all letters, numbers and +-. is allowed)" onChange={(e) => { setDateval(e.target.value); }} />
                                 </div>
                             </Accordion.Body>
                         </Accordion.Item>
@@ -319,6 +324,12 @@ export function NftMintNew() {
                 <Col md={4}  className='mt-3 mt-lg-0'>
                     <Component name={NameText} date={dateVal} bg1={bg1} bg2={bg2} bg3={bg3} lock_color={lockcolor} text_color={text_color} date_color={date_color} />
                 </Col>
+            </Row>
+            <Row>
+                <Col md={8} className='mt-4'>
+                    <p>There is a one time fee for the lock of 25 USD. Half of the funds will go into a raffle and each month one of the locks will be chosen as winner. So if you’re lucky, maybe you can go for a nice dinner or even a short holiday trip together with that money. And you have this chance every month.  
+The other half is used for transaction fees and the development fund of this website. We plan to build a beautiful love lock bridge in the metaverse.
+</p></Col>
             </Row>
         </Container>
     )

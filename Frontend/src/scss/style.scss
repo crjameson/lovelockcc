@@ -6,6 +6,7 @@ $primary: #4e76f4;
 
 * {
     font-family: "Lato", sans-serif;
+    font-size: 1.1rem;
 }
 
 body {
@@ -18,7 +19,7 @@ body {
 }
 
 p {
-    font-size: 1.25rem;
+    font-size: 1.1rem;
 
     @media (max-width: $md) {
         font-size: 1rem;
@@ -27,12 +28,14 @@ p {
 
 .connect-wallet-container {
     button {
-        background: #4e76f4 !important;
+        background: #d50b0a !important;
     }
 }
 
 .btn-primary {
     color: #fff;
+    background: #d50b0a !important;
+    font-weight: 600;
 
     &:hover {
         color: #fff;

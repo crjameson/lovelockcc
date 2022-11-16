@@ -150,7 +150,7 @@ export function ShowNFT() {
                     : (
                         <div className="row">
                             <div className="col flex-column">
-                                <h4>Seems like you don't have a Love Lock NFT yet.</h4>
+                                <p>Seems like you don't have a Love Lock NFT yet. Go to Mint to change that.</p>
                             </div>
                         </div>
                     )}
