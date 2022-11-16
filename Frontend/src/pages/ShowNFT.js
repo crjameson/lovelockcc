@@ -17,6 +17,9 @@ import '../scss/shownft.scss'
 export function ShowNFT() {
     const [locks, setLocks] = useState([]);
     const [nftJson, setNFTJSON] = useState();
+    const [nftName, setNFTName] = useState();
+    const [nftDescription, setNFTDescription] = useState();
+    const [nftAttributes, setNFTAttributes] = useState();
     const [elementLoaded, setelementLoaded] = useState(false);
     const [lockid, setlockid] = useState(0);
     const { address, isConnected } = useAccount()
@@ -89,6 +92,9 @@ export function ShowNFT() {
             if (lockid > 0) {
                 console.log(atob(tmp_json["image"].slice(26)));
                 setNFTJSON(atob(tmp_json["image"].slice(26)));
+                setNFTName(tmp_json["name"]);
+                setNFTDescription(tmp_json["description"]);
+                setNFTAttributes(tmp_json["attributes"]);
             }
             //console.log(atob(tmp_json["image"].slice(26)));
             //
@@ -135,7 +141,7 @@ export function ShowNFT() {
                 {lockid > 0 ?
                     (
                         <div>
-                            <h2 className='h2 mb-4'>Your <span>Love</span>Lock</h2>
+                            <h2 className='h2 mb-4'>Your { nftName }</h2>
 
                             <div className='card-container'>
                                 <Card>
@@ -144,6 +150,18 @@ export function ShowNFT() {
                                     </Card.Body>
                                 </Card>
                             </div>
+
+                            <div className='card-container'>
+                                <Card className='text-center'> 
+                                    <Card.Body>
+                                    <p> { nftDescription } </p> 
+                                    </Card.Body>
+                                </Card>
+                            </div>
+                            <p>
+                            <div><pre>{JSON.stringify(nftAttributes, null, 2) }</pre></div>
+                                
+                            </p>
                         </div>
                     )
 

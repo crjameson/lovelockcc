@@ -24,7 +24,7 @@ contract LoveLock is ERC721URIStorage, VRFConsumerBase,  Ownable {
     // for tests one lock costs 10 cent so around 0.1 matic
     uint256 private lockPriceUSD = 0.1 * (10**18);
     // percentage amount of the lockPrice paid to dev for Link and Dev costs
-    uint256 private constant devFee = 40;
+    uint256 private constant devFee = 50;
 
     // locks are minted with always increased id from this counter
     using Counters for Counters.Counter;
