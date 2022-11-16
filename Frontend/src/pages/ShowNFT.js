@@ -158,9 +158,7 @@ export function ShowNFT() {
                                     </Card.Body>
                                 </Card>
                             </div>
-                            <p>
-                            <div><pre>{JSON.stringify(nftAttributes, null, 2) }</pre></div>
-                                
+                            <p>                                
                             </p>
                         </div>
                     )

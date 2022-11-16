@@ -193,6 +193,41 @@ def test_lockSVG3(lovelock_contract, example_lock):
     decodedStr = decodedBytes.decode("ascii") 
     LOGGER.debug("image: " + str(decodedStr))
 
+def test_lockSVG4(lovelock_contract, example_lock):
+    #only do this on local chains
+    if network.show_active() not in LOCAL_BLOCKCHAIN_ENVIRONMENTS:
+        pytest.skip()
+
+    test_lock_grey_heart_normal_lock = ["4d4d4d",\
+            "333333",\
+            "000000",\
+            0,\
+            0,\
+            "9f0500",\
+            "T + T",\
+            "ffffff",\
+            "37.07.2022",\
+            "ffffff"]  
+
+    lovelock_contract.createLoveLock(
+            test_lock_grey_heart_normal_lock,
+            "some nice nft description",
+        {"from": get_account(),
+        "value": LOCK_FEE}
+    )
+
+    nft_string = lovelock_contract.tokenURI(1)
+    #nft_json = json.loads(nft_string)
+    LOGGER.debug("nft string: " + nft_string)
+    decodedBytes = base64.b64decode(nft_string.split(",")[1])
+    decodedStr = decodedBytes.decode("ascii") 
+    LOGGER.debug("ascii string: " + str(decodedStr))
+    json_data=json.loads(decodedStr)
+    LOGGER.debug("json string: " + str(json_data))
+    decodedBytes = base64.b64decode(json_data["image"].split(",")[1])
+    decodedStr = decodedBytes.decode("ascii") 
+    LOGGER.debug("image: " + str(decodedStr))
+
 
 def test_get_lock_fee(lovelock_contract):
     #only do this on local chains
