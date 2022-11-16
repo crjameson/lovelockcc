@@ -22,7 +22,7 @@ contract LoveLock is ERC721URIStorage, VRFConsumerBase,  Ownable {
     // price for one lovelock - make love free :D, maybe we can use some chainlink pricing feature here 
     // 10 USD for a lock 5 for raffle, 1 for fees, and 4 for dev
     // for tests one lock costs 10 cent so around 0.1 matic
-    uint256 private constant lockPriceUSD = 0.1 * (10**18);
+    uint256 private lockPriceUSD = 0.1 * (10**18);
     // percentage amount of the lockPrice paid to dev for Link and Dev costs
     uint256 private constant devFee = 40;
 
@@ -210,5 +210,12 @@ contract LoveLock is ERC721URIStorage, VRFConsumerBase,  Ownable {
     /// @dev returns the current amount in the price pool minus dev fees
     function getCurrentPriceMoney() public view returns (uint256) {
         return address(this).balance / 100 * (100-devFee);
+    }
+
+
+    /// @dev sets the price of a lock in USD, default 0.1 for testing and 10 for live
+    function setLockFeeUSD(uint256 newLockPrice) onlyOwner public returns (uint256) {
+        lockPriceUSD = newLockPrice * (10**18);
+        return lockPriceUSD;
     }
 }
