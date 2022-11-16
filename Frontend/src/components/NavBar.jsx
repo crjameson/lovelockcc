@@ -17,7 +17,7 @@ export default function NavBar() {
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="ms-auto">
                         <Link className='nav-link' to="/">Home</Link>
-                        <Link className='nav-link' to="/your-LoveLock">Your NFT</Link>
+                        <Link className='nav-link' to="/showroom">Your NFT</Link>
                         <Link className='nav-link' to="/mint">Mint</Link>
                         <Link className='nav-link' to="/raffle">Raffle</Link>
                         <div className="ms-lg-5">

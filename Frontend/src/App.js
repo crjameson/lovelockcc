@@ -46,7 +46,7 @@ export default function App() {
                 <NavBar />
                     <Routes>
                         <Route path="/" element={<Homenew />} />
-                        <Route path="/your-LoveLock" element={<ShowNFT />} />
+                        <Route path="/showroom" element={<ShowNFT />} />
                         <Route path="/mint" element={<NftMintNew />} />
                         <Route path="/raffle" element={<Raffle />} />
                     </Routes>
