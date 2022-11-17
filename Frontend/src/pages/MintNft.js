@@ -9,17 +9,17 @@ import {
 import { useAccount, useConnect, useDisconnect } from 'wagmi'
 import { useEffect, useState } from "react";
 import ReactDOM from 'react-dom';
-import Modal from 'react-modal';
+
 import "../scss/mint.scss";
-import preview from "../Assets/svgviewer-output.svg";
+
 import BigNumber from "bignumber.js";
 
 import { SketchPicker, CompactPicker } from "@hello-pangea/color-picker";
 
-import SVG_hearth_normal from "../Locks/SVG_hearth_normal";
-import SVGhearthhearth from "../Locks/SVG_hearth_hearth";
+import SVG_heart_normal from "../Locks/SVG_heart_normal";
+import SVGheartheart from "../Locks/SVG_heart_heart";
 import SVGsquarenormal from "../Locks/SVG_square_normal";
-import SVG_square_hearth from "../Locks/SVG_square_hearth";
+import SVG_square_heart from "../Locks/SVG_square_heart";
 import config_file from "../Config/Config.json";
 import {useNavigate} from "react-router-dom";
 
@@ -41,13 +41,18 @@ export function NftMintNew() {
     const [text_color, setTextcolor] = useState("#1F1F1F");
     const [date_color, setDateColor] = useState("#1F1F1F");
     const [lockprice, setLockprice] = useState("");
+    const [Mintsettled, setMintsettled] = useState(false);
+    const [Errmsg, setErrmsg] = useState("");
+    const [lockid, setlockid] = useState(0);
 
+    let navigate = useNavigate();
+    const { address, isConnected } = useAccount()
 
     const components = {
-        "hearth_normal": SVG_hearth_normal,
-        "hearth_hearth": SVGhearthhearth,
+        "heart_normal": SVG_heart_normal,
+        "heart_heart": SVGheartheart,
         "square_normal": SVGsquarenormal,
-        "square_hearth": SVG_square_hearth
+        "square_heart": SVG_square_heart
     };
     const Component = components[Render_component];
 
@@ -55,16 +60,15 @@ export function NftMintNew() {
         if (Locktype == 0 && Keyholetype == 0) {
             setRender_component("square_normal");
         } else if (Locktype == 0 && Keyholetype == 1) {
-            setRender_component("square_hearth");
+            setRender_component("square_heart");
         } else if (Locktype == 1 && Keyholetype == 0) {
-            setRender_component("hearth_normal");
+            setRender_component("heart_normal");
         } else {
-            setRender_component("hearth_hearth");
+            setRender_component("heart_heart");
         }
     }, [Locktype, Keyholetype]);
 
-    const { address, isConnected } = useAccount()
-    let navigate = useNavigate();
+
 
 
     const { datareader, isErrorreader, isLoadingreader } = useContractRead({
@@ -201,16 +205,52 @@ export function NftMintNew() {
             //args: [[bg1.substring(1), bg2.substring(1), bg3.substring(1), Locktype.toString(), Keyholetype.toString(), lockcolor.substring(1), NameText, text_color.substring(1), ,dateVal.toString(), date_color.substring(1)], NftDescription],
             onSuccess(data) {
                 //console.log('Success', data)
+                setMintsettled(true);
             },
-            onSettled(data, error) {
-                //console.log('Settled', { data, error })
-                navigate("/showroom");
-
+            onError(data)
+            {
+                setErrmsg(data?.data?.message);
             }
         })
     const { isLoading, isSuccess } = useWaitForTransaction({ hash: data?.hash, });
 
+    const { datareadfirst, isErrorreadfirst, isLoadingreadfirst } = useContractRead({
+        address: config_file.contract_address,
 
+        abi: [
+            {
+                name: 'getMyLock',
+                type: 'function',
+                stateMutability: 'view',
+                inputs: [],
+                outputs: [
+                    {
+                        "internalType": "uint256",
+                        "name": "",
+                        "type": "uint256"
+                    }
+                ],
+            },
+        ],
+        functionName: 'getMyLock',
+        args: [],
+        overrides: {
+            from: address
+        },
+        onSuccess(data) {
+
+            setlockid(JSON.parse(data));
+        },
+        onError(error) {
+        },
+    })
+
+    useEffect(() => {
+        if (isSuccess)
+        {
+            navigate("/showroom");
+        }
+    }, [isSuccess]);
     return (
         <Container className="mint flex-column">
             <Row>
@@ -228,13 +268,13 @@ export function NftMintNew() {
                                 <div className='form-group mb-4'>
                                     <select name="locktype" className="form-control" id="alertype" onChange={(e) => setLocktype(e.target.value)}>
                                         <option value="0">Square Shape</option>
-                                        <option value="1">Hearth Shape</option>
+                                        <option value="1">Heart Shape</option>
                                     </select>
                                 </div>
                                 <div className='form-group mb-4'>
                                     <select name="keyhole" className="form-control" id="alertype" onChange={(e) => setKeyholetype(e.target.value)}>
                                         <option value="0">Normal Keyhole</option>
-                                        <option value="1">Hearth Keyhole</option>
+                                        <option value="1">Heart Keyhole</option>
                                     </select>
                                 </div>
                             </Accordion.Body>
@@ -312,10 +352,10 @@ export function NftMintNew() {
 
                                 <div className='form-group mb-2'>
                                     <label className='text-muted'>Custom Text </label>
-                                    <input type="text" className="form-control" id="inputcustomtext" placeholder="Your Custom Text (all letters, numbers and +-. is allowed)" maxLength="28" onChange={(e) => { setNameText(e.target.value); }} />
+                                    <input type="text" className="form-control" id="inputcustomtext" placeholder="Your Custom Text (all letters, numbers and +-. are allowed)" maxLength="28" onChange={(e) => { setNameText(e.target.value); }} />
                                 </div>
                                 <div className='form-group'>
-                                    <input type="text" className="form-control" id="inputcustomdate" placeholder="Date (all letters, numbers and +-. is allowed)" onChange={(e) => { setDateval(e.target.value); }} />
+                                    <input type="text" className="form-control" id="inputcustomdate" placeholder="Date (all letters, numbers and +-. are allowed)" onChange={(e) => { setDateval(e.target.value); }} />
                                 </div>
                             </Accordion.Body>
                         </Accordion.Item>
@@ -323,9 +363,22 @@ export function NftMintNew() {
 
                     </Accordion>
 
-                    <button className="btn btn-primary btn-lg w-100 mt-3" disabled={!isConnected} onClick={() => write?.()}>
-                        {isConnected ? 'Mint your NFT' : 'Please connect your Wallet'}
-                        </button>
+                    {Errmsg ??(
+                    <div>
+                        {Errmsg}
+                    </div>)}
+
+                    { lockid > 0 ? (
+                            <button className="btn btn-primary btn-lg w-100 mt-3" disabled={!isConnected} onClick={() => navigate("/showroom")}>
+                                You already have a LoveLock! Click to view it.
+                            </button>
+                    ):
+                        (
+                            <button className="btn btn-primary btn-lg w-100 mt-3" disabled={!isConnected} onClick={() => write?.()}>
+                                {isConnected ? 'Mint your NFT' : 'Please connect your Wallet'}
+                            </button>
+                        )}
+
                 </Col>
                 <Col md={4}  className='mt-3 mt-lg-0'>
                     <Component name={NameText} date={dateVal} bg1={bg1} bg2={bg2} bg3={bg3} lock_color={lockcolor} text_color={text_color} date_color={date_color} />
@@ -333,7 +386,7 @@ export function NftMintNew() {
             </Row>
             <Row>
                 <Col md={8} className='mt-4'>
-                    <p>There is a one time fee for the lock of 25 USD. Half of the funds will go into a raffle and each month one of the locks will be chosen as winner. So if you’re lucky, maybe you can go for a nice dinner or even a short holiday trip together with that money. And you have this chance every month.  
+                    <p>There is a one time fee for the lock of 25 USD. 50% of the funds will go into a raffle and each month one of the locks will be chosen as winner. So if you’re lucky, maybe you can go for a nice dinner or even a short holiday trip together with that money. And you have this chance every month.
 The other half is used for transaction fees and the development fund of this website. We plan to build a beautiful love lock bridge in the metaverse.
 </p></Col>
             </Row>

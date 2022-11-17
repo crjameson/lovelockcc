@@ -160,7 +160,7 @@ const Raffle = () => {
                 <h1 className="text-center display-5 fw-bold">Win the <span className="spanlove">Love</span>Lock Jackpot</h1>
                 <CountdownTimer />
                 <Row className="align-items-center justify-content-center">
-                    <Col md={8}><p className="col-md-12 fs-5">By minting your own customized NFT, you automatically participate in the LoveLock Raffle. Every Month a random winner is choosen by the system.</p>
+                    <Col md={8}><p className="col-md-12 fs-5">By minting your own customized NFT, you automatically participate in the LoveLock Raffle. Every month a random winner is chosen by the system.</p>
                         </Col>
                 </Row>
 
@@ -170,14 +170,14 @@ const Raffle = () => {
                 </Row>
 
                 <Row className="align-items-center justify-content-center">
-                    <Col md={8}><p className="col-md-12 fs-5">Last Month the Jackpot was {last_pricepot.toFixed(3)} Matic.</p>
+                    <Col md={8}><p className="col-md-12 fs-5">Last Month the jackpot was {last_pricepot.toFixed(3)} Matic.</p>
                     </Col>
                 </Row>
 
                 {user_won && (
                     <>
-                        <p className="col-md-12 fs-5">Congratulations! You Won the Jackpot! Claim your {last_pricepot.toFixed(3)} Matic.</p>
-                            <button className="btn btn-primary btn-lg" onClick={() => write?.()}>Claim Jackpot</button>
+                        <p className="col-md-12 fs-5">Congratulations! You won the jackpot! Claim your {last_pricepot.toFixed(3)} Matic.</p>
+                            <button className="btn btn-primary btn-lg" onClick={() => write?.()}>Claim jackpot</button>
                         </>
                 )}
 

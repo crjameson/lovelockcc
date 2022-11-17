@@ -1,6 +1,6 @@
 import * as React from "react";
 
-const SVGHearthHearth = (props) => (
+const SVGHearthHeart = (props) => (
 
     <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -205,4 +205,4 @@ const SVGHearthHearth = (props) => (
 
 
 );
-export default SVGHearthHearth;
+export default SVGHearthHeart;

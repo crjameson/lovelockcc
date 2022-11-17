@@ -5,7 +5,7 @@ import { Row, Col, Container } from 'react-bootstrap'
 import unique from "../Assets/Unique.svg";
 import eternity from "../Assets/eternity.svg";
 import axe from "../Assets/axe.svg";
-import hearthimg from "../Assets/heart.svg";
+import heartimg from "../Assets/heart.svg";
 import '../scss/home.scss'
 
 export default class Home extends React.Component {
@@ -62,7 +62,7 @@ export default class Home extends React.Component {
                     <Row>
                         <Col>
                             <div className='faded-button text-center'>
-                                <img src={hearthimg} />
+                                <img src={heartimg} />
                             </div>
                         </Col>
                     </Row>
@@ -138,7 +138,7 @@ No waste, no pollution of the environment and no way to remove it. A bit nerdy b
                 <div className="section_4">
                     <Row className='justify-content-center'>
                         <Col className="text-center flex_images flex-column" lg={6}>
-                            <h1 className="display-6 fw-bold mb-4">Ready?</h1>
+                            <h1 className="display-6 fw-bold mb-4"></h1>
                             <p></p>
                             <div className='faded-button'>
                                 <Link

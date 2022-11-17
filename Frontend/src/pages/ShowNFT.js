@@ -8,7 +8,6 @@ import {
 } from 'wagmi'
 
 import BigNumber from "bignumber.js";
-import arrow from "../Assets/left-arrow-svgrepo-com.svg";
 import { useAccount, useConnect, useDisconnect } from 'wagmi'
 import config_file from "../Config/Config.json";
 import { Card, Container, Row } from 'react-bootstrap';
@@ -55,7 +54,7 @@ export function ShowNFT() {
             setelementLoaded(true);
         },
         onError(error) {
-            console.log('Error', error)
+
             setelementLoaded(true);
         },
     })
@@ -87,7 +86,6 @@ export function ShowNFT() {
         onSuccess(data) {
             let tmp_json = JSON.parse(atob(data.slice(29)));
             if (lockid > 0) {
-                console.log(atob(tmp_json["image"].slice(26)));
                 setNFTJSON(atob(tmp_json["image"].slice(26)));
                 setNFTName(tmp_json["name"]);
                 setNFTDescription(tmp_json["description"]);
