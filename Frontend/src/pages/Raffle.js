@@ -174,7 +174,7 @@ const Raffle = () => {
                 <h1 className="text-center display-5 fw-bold">Win the <span className="spanlove">Love</span>Lock Jackpot</h1>
                 <CountdownTimer />
                 <Row className="align-items-center justify-content-center">
-                    <Col md={8}><p className="col-md-12 fs-5">By minting your own customized NFT, you automatically participate in the LoveLock Raffle. Every Month a ranodm winner is choosen by the system.</p>
+                    <Col md={8}><p className="col-md-12 fs-5">By minting your own customized NFT, you automatically participate in the LoveLock Raffle. Every Month a random winner is choosen by the system.</p>
                         </Col>
                 </Row>
 
