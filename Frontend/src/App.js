@@ -13,7 +13,7 @@ import { Container } from "react-bootstrap";
 
 import Raffle from './pages/Raffle.js';
 import { ShowNFT } from "./pages/ShowNFT";
-import { NftMintNew } from "./pages/Nft_Mint_new";
+import { NftMintNew } from "./pages/MintNft";
 import NavBar from "./components/NavBar";
 import Home from "./pages/LandingPage";
 

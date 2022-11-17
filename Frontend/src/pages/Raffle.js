@@ -43,7 +43,6 @@ const Raffle = () => {
         },
         onSuccess(data) {
 
-            console.log("getCurrentPriceMoney Data: ", JSON.parse(data) /1000000000000000000);
             setcurrent_pricepot(JSON.parse(data) /1000000000000000000);
 
         },
@@ -76,8 +75,6 @@ const Raffle = () => {
             from: address
         },
         onSuccess(data) {
-
-            console.log("getRecentPriceMoney Data: ", (JSON.parse(data)));
             setlast_pricepot((JSON.parse(data)/1000000000000000000));
 
         },
@@ -112,7 +109,6 @@ const Raffle = () => {
         onSuccess(data) {
             if (address != undefined)
             {
-                console.log("hasWon Data: ", (JSON.parse(data)));
                 setUserwon(JSON.parse(data));
             }
 
@@ -158,16 +154,6 @@ const Raffle = () => {
             }
         })
 
-    useEffect(() => {
-
-
-        var DateObj = new Date()
-        var months = DateObj.getMonth();
-
-        // Printing month.
-        console.log(DateObj);
-        console.log(months);
-    });
     return (
         <Container className="home p-1 p-lg-5 pt-lg-2 my-4 bg-light rounded-3">
             <div className="container-fluid py-5">

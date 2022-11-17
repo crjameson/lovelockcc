@@ -57,8 +57,6 @@ export function ShowNFT() {
         onError(error) {
             console.log('Error', error)
             setelementLoaded(true);
-
-            // setlockid(0);
         },
     })
     const { dataread, isErrorread, isLoadingread } = useContractRead({
@@ -95,10 +93,6 @@ export function ShowNFT() {
                 setNFTDescription(tmp_json["description"]);
                 setNFTAttributes(tmp_json["attributes"]);
             }
-            //console.log(atob(tmp_json["image"].slice(26)));
-            //
-            //document.getElementById("wrapper").innerHTML = nftJson
-
             setelementLoaded(true);
         },
     })
@@ -122,12 +116,6 @@ export function ShowNFT() {
         functionName: 'tokenCounter',
         args: [],
         onSuccess(data) {
-
-            //            console.log("Token counter: ", JSON.parse(data));
-            console.log("Token counter: ", data);
-            //console.log(atob(tmp_json["image"].slice(26)));
-            //
-            //document.getElementById("wrapper").innerHTML = nftJson
         },
     })
 
