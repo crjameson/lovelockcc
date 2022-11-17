@@ -11,13 +11,11 @@ import { Container } from "react-bootstrap";
 
 
 
-
-import Home from './pages/Home.js';
 import Raffle from './pages/Raffle.js';
 import { ShowNFT } from "./pages/ShowNFT";
 import { NftMintNew } from "./pages/Nft_Mint_new";
 import NavBar from "./components/NavBar";
-import Homenew from "./pages/Home2";
+import Home from "./pages/LandingPage";
 
 
 const { chains, provider } = configureChains(
@@ -33,7 +31,7 @@ const { connectors } = getDefaultWallets({
 });
 
 const wagmiClient = createClient({
-    autoConnect: true,
+    autoConnect: false,
     connectors,
     provider
 });
@@ -45,7 +43,7 @@ export default function App() {
             <RainbowKitProvider chains={chains}>
                 <NavBar />
                     <Routes>
-                        <Route path="/" element={<Homenew />} />
+                        <Route path="/" element={<Home />} />
                         <Route path="/showroom" element={<ShowNFT />} />
                         <Route path="/mint" element={<NftMintNew />} />
                         <Route path="/raffle" element={<Raffle />} />

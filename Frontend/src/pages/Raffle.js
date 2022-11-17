@@ -9,7 +9,7 @@ import {
 } from 'wagmi';
 import { useAccount, useConnect, useDisconnect } from 'wagmi'
 import config_file from "../Config/Config.json";
-import CountdownTimer from "./Countdown.js";
+import CountdownTimer from "../components/Countdown.js";
 import { Row, Col, Container } from 'react-bootstrap'
 
 const Raffle = () => {

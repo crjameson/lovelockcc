@@ -51,7 +51,6 @@ export function ShowNFT() {
         },
         onSuccess(data) {
 
-            console.log("getMyLock Data: ", data);
             setlockid(JSON.parse(data));
             setelementLoaded(true);
         },

@@ -8,7 +8,7 @@ import axe from "../Assets/axe.svg";
 import hearthimg from "../Assets/heart.svg";
 import '../scss/home.scss'
 
-export default class Homenew extends React.Component {
+export default class Home extends React.Component {
     render() {
         return (
             <div className='home'>

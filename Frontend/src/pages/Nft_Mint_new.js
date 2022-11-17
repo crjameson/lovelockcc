@@ -21,6 +21,7 @@ import SVGhearthhearth from "../Locks/SVG_hearth_hearth";
 import SVGsquarenormal from "../Locks/SVG_square_normal";
 import SVG_square_hearth from "../Locks/SVG_square_hearth";
 import config_file from "../Config/Config.json";
+import {useNavigate} from "react-router-dom";
 
 const customStyles = {
     content: {
@@ -63,6 +64,7 @@ export function NftMintNew() {
     }, [Locktype, Keyholetype]);
 
     const { address, isConnected } = useAccount()
+    let navigate = useNavigate();
 
 
     const { datareader, isErrorreader, isLoadingreader } = useContractRead({
@@ -198,10 +200,12 @@ export function NftMintNew() {
 
             //args: [[bg1.substring(1), bg2.substring(1), bg3.substring(1), Locktype.toString(), Keyholetype.toString(), lockcolor.substring(1), NameText, text_color.substring(1), ,dateVal.toString(), date_color.substring(1)], NftDescription],
             onSuccess(data) {
-                console.log('Success', data)
+                //console.log('Success', data)
             },
             onSettled(data, error) {
-                console.log('Settled', { data, error })
+                //console.log('Settled', { data, error })
+                navigate("/showroom");
+
             }
         })
     const { isLoading, isSuccess } = useWaitForTransaction({ hash: data?.hash, });
@@ -319,7 +323,9 @@ export function NftMintNew() {
 
                     </Accordion>
 
-                    <button className="btn btn-primary btn-lg w-100 mt-3" onClick={() => write?.()}>Mint your NFT</button>
+                    <button className="btn btn-primary btn-lg w-100 mt-3" disabled={!isConnected} onClick={() => write?.()}>
+                        {isConnected ? 'Mint your NFT' : 'Please connect your Wallet'}
+                        </button>
                 </Col>
                 <Col md={4}  className='mt-3 mt-lg-0'>
                     <Component name={NameText} date={dateVal} bg1={bg1} bg2={bg2} bg3={bg3} lock_color={lockcolor} text_color={text_color} date_color={date_color} />
