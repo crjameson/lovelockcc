@@ -1,7 +1,7 @@
 
 
 from scripts.helpful_scripts import get_account, get_contract, fund_with_link
-from brownie import LoveLock, network, config
+from brownie import LoveLock, network, config, XSSFilter
 
 
 def deploy_lovelock():
@@ -22,6 +22,14 @@ def deploy_lovelock():
     return lovelock
 
     #TODO: deploy on polygon and arbitrum testnets, maybe all evm chains?
+
+# libraries need to be deployed extra: https://ethereum.stackexchange.com/questions/119265/how-to-test-internal-members-of-solidity-library-or-contract-in-brownie
+def deploy_xss_filter():
+    account = get_account()
+    xss_filter = XSSFilter.deploy({"from": account})
+    print("deployed at: " + xss_filter.address)
+
+    return xss_filter
 
 
 def main():

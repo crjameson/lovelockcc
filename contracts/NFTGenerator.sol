@@ -38,9 +38,7 @@ library NFTGenerator {
     /// @dev takes th
     /// @param params SVGParams params already validated list of params for the image
     /// @return string the svg image as abi encoded string
-    
     function generateSVGImage(SVGParams memory params) internal pure returns (string memory) {
-
         return
             string(
                 abi.encodePacked(
@@ -66,7 +64,7 @@ library NFTGenerator {
             );
     }
 
-        /// @dev generate SVG background
+    /// @dev generate SVG background
     function generateBackground(string memory bg1, string memory bg2, string memory bg3) private pure returns (string memory) {
         //defaults for nice smooth grey background, looking good with silver
         //bg1 default #fff
@@ -88,7 +86,7 @@ library NFTGenerator {
             );
     }
 
-            /// @dev generate top of the lock
+    /// @dev generate top of the lock
     function generateLockTop() private pure returns (string memory) {
         return
             string(
@@ -113,8 +111,8 @@ library NFTGenerator {
     }
 
 
-            /// @dev generate lock
-            // error: CompilerError: Stack too deep when compiling inline assembly: Variable pos is 5 slot(s) too deep inside the stack. -> abi call double
+    /// @dev generate lock
+    // error: CompilerError: Stack too deep when compiling inline assembly: Variable pos is 5 slot(s) too deep inside the stack. -> abi call double
     function generateLock(uint256 shape, string memory color) private pure returns (string memory) {
         if(shape == uint256(LOCK_SHAPE.HEART)) {
             // 1
@@ -216,7 +214,6 @@ library NFTGenerator {
             keyHoleShape = "heart";
         }
         
-
         return
             string(
                 abi.encodePacked(
@@ -246,9 +243,9 @@ library NFTGenerator {
     function getJsonAttribute(
         string memory trait,
         string memory value,
-        bool end
+        bool last
     ) private pure returns (string memory json) {
-        return string(abi.encodePacked('{ "trait_type" : "', trait, '", "value" : "', value, '" }', end ? "" : ","));
+        return string(abi.encodePacked('{ "trait_type" : "', trait, '", "value" : "', value, '" }', last ? "" : ","));
     }
 
 }

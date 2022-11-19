@@ -12,15 +12,17 @@ import "@chainlink/contracts/src/v0.8/VRFConsumerBase.sol";
 import "./NFTGenerator.sol";
 import "./XSSFilter.sol";
 
-// we still use vrfconsumerbase v1, the new one adds subscrition to safe some gas fees, 
+// we still use vrfconsumerbase v1, the new one adds subscribtion to safe some gas fees, 
 // but probably even harder to test that :D so TODO: Update to chainlink subscription
 // https://docs.chain.link/docs/vrf/v2/subscription/migration-from-v1/
+
+//TODO: great text about optimization: https://0xmacro.com/blog/solidity-gas-optimizations-cheat-sheet/
 
 
 contract LoveLock is ERC721URIStorage, VRFConsumerBase,  Ownable {
     uint256 public tokenCounter;
     // price for one lovelock - make love free :D, maybe we can use some chainlink pricing feature here 
-    // 10 USD for a lock 5 for raffle, 1 for fees, and 4 for dev
+    // 25 USD for a lock 50% for raffle, 50% for fees and dev
     // for tests one lock costs 10 cent so around 0.1 matic
     uint256 private lockPriceUSD = 0.1 * (10**18);
     // percentage amount of the lockPrice paid to dev for Link and Dev costs
@@ -56,8 +58,8 @@ contract LoveLock is ERC721URIStorage, VRFConsumerBase,  Ownable {
 
     // EVENTS
     event RequestedRandomness(bytes32 requestId);
-    event LockCreated(address owner, uint256 id);
-    event RaffleEnded(address winner, uint256 amount);
+    event LockCreated(address owner, uint256 indexed id);
+    event RaffleEnded(address winner, uint256 indexed amount);
 
 
     constructor(address _priceFeedAddress, 
@@ -154,20 +156,31 @@ contract LoveLock is ERC721URIStorage, VRFConsumerBase,  Ownable {
     // raffle stuff starts here
 
     /// make sure the contract has link tokens at the deployed contract address! otherwise gas estimation failed error
+    /// @dev this is the end raffle function called by chainlink automations 
     function endRaffle() public onlyOwner {
         raffle_state = RAFFLE_STATE.CALCULATING_WINNER;
-        // reset values in case the winner has not claimed his price
-        recentWinner = payable(address(0));
-        recentPriceMoney = 0;
 
         // pay the dev first - the rest goes to the winner 
+        
         uint256 current_balance = address(this).balance;
         require(current_balance > 1000000000000000000, "not enough token to raffle");
 
+        
         uint256 dev_amount = current_balance / 100 * devFee;
+
+        // TODO: check this - this would be more fair if we only distribute to dev if the previous winner has claimed or substract the previous price balance?
+        if(recentPriceMoney > 0) {
+            // previous winner has not claimed, so only take the dev fee from the new entries
+            dev_amount = (current_balance - recentPriceMoney) / 100 * devFee;
+        }
+
         payable(owner()).transfer(dev_amount);
 
         bytes32 requestId = requestRandomness(keyhash, chainlinkFee);
+
+        // reset values in case the winner has not claimed his price
+        recentWinner = payable(address(0));
+        recentPriceMoney = 0;
         emit RequestedRandomness(requestId);
     }
     
@@ -194,6 +207,8 @@ contract LoveLock is ERC721URIStorage, VRFConsumerBase,  Ownable {
         require(msg.sender == recentWinner, "only recent winner can claim the money");
 
         recentWinner.transfer(recentPriceMoney);
+        // reset the recent price money, so we know, the winner claimed it
+        recentPriceMoney = 0;
     }
 
     /// @dev returns the current amount in the price pool minus dev fees
@@ -213,7 +228,7 @@ contract LoveLock is ERC721URIStorage, VRFConsumerBase,  Ownable {
     }
 
 
-    /// @dev sets the price of a lock in USD, default 0.1 for testing and 10 for live
+    /// @dev sets the price of a lock in USD, default 0.1 for testing and 25 for live
     function setLockFeeUSD(uint256 newLockPrice) onlyOwner public returns (uint256) {
         lockPriceUSD = newLockPrice * (10**18);
         return lockPriceUSD;
